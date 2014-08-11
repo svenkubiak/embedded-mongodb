@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.svenkubiak</groupId>
-	<artifactId>embedded-mongo</artifactId>
+	<artifactId>embedded-mongodb</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>embedded-mongo</name>
+	<name>embedded-mongodb</name>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -23,9 +23,9 @@
 		<logback.version>1.1.2</logback.version>
 	</properties>
 	<scm>
-		<connection>scm:git:git@github.com:svenkubiak/embedded-mongo.git</connection>
-		<developerConnection>scm:git:git@github.com:svenkubiak/embedded-mongo.git</developerConnection>
-		<url>git@github.com:svenkubiak/embedded-mongo.git</url>
+		<connection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</connection>
+		<developerConnection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</developerConnection>
+		<url>git@github.com:svenkubiak/embedded-mongodb.git</url>
 		<tag>HEAD</tag>
 	</scm>
 	<build>

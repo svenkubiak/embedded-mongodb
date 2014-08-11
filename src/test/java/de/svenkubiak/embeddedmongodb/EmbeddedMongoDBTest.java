@@ -1,4 +1,4 @@
-package de.svenkubiak.embeddedmongo;
+package de.svenkubiak.embeddedmongodb;
 
 import static org.junit.Assert.*;
 
@@ -13,17 +13,19 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 
-public class EmbeddedMongoTest {
+import de.svenkubiak.embeddedmongodb.EmbeddedMongoDB;
+
+public class EmbeddedMongoDBTest {
 	@Before
 	public void init() {
-		EmbeddedMongo.getInstance();
+		EmbeddedMongoDB.getInstance();
 	}
 	
 	@Test
 	public void testMongoDB() {
 		MongoClient mongoClient = null;
 		try {
-			mongoClient = new MongoClient(EmbeddedMongo.host, EmbeddedMongo.port);
+			mongoClient = new MongoClient(EmbeddedMongoDB.host, EmbeddedMongoDB.port);
 		} catch (UnknownHostException e) {
 			fail("Failed to created MongoClient");
 		}
@@ -44,6 +46,6 @@ public class EmbeddedMongoTest {
 	
 	@After
 	public void shutdown() {
-		EmbeddedMongo.shutdown();
+		EmbeddedMongoDB.shutdown();
 	}
 }

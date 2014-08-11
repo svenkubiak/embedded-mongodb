@@ -1,4 +1,4 @@
-package de.svenkubiak.embeddedmongo;
+package de.svenkubiak.embeddedmongodb;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +14,15 @@ import de.flapdoodle.embed.mongo.distribution.Version;
  * @author skubiak
  *
  */
-public class EmbeddedMongo {
-    private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongo.class);
+public class EmbeddedMongoDB {
+    private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
     private static final MongodStarter STARTER = MongodStarter.getDefaultInstance();
     private static MongodExecutable mongodExecutable;
-    private static EmbeddedMongo instance;
+    private static EmbeddedMongoDB instance;
     public static int port = 0;
     public static String host = "127.0.0.1";
     
-    private EmbeddedMongo() {
+    private EmbeddedMongoDB() {
     	port = (int) (Math.random() * (65000 - 28000) + 28000);
     	try {
             mongodExecutable = STARTER.prepare(new MongodConfigBuilder()
@@ -36,9 +36,9 @@ public class EmbeddedMongo {
         }
     }
 
-    public static EmbeddedMongo getInstance() {
+    public static EmbeddedMongoDB getInstance() {
         if (instance == null) {
-            instance = new EmbeddedMongo();
+            instance = new EmbeddedMongoDB();
         }
         return instance;
     }
