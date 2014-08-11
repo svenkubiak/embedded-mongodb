@@ -6,19 +6,20 @@ Embedded MongoDB for unit testing purposes based on [flapdoodle-oss/de.flapdoodl
 Usage
 ------------------
 
-1) Add the ninja-validation-module dependency to your pom.xml:
+1) Add the embedded-mongodb dependency to your pom.xml:
 
     <dependency>
         <groupId>de.svenkubiak</groupId>
         <artifactId>embedded-mongodb</artifactId>
         <version>x.x.x</version>
+        <scope>test</scope>
     </dependency>
 
 2) Start up the embedded mongodb with the following command:
 
 	EmbeddedMongoDB.getInstance();
 	
-You may want to do this in an @Before annotated class of you unit tests
+You may want to do this in an @Before annotated class of your unit tests
 	
 You can get the port and host using 
 
