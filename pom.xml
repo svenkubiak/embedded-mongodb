@@ -4,7 +4,6 @@
 	<artifactId>embedded-mongodb</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>embedded-mongodb</name>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -27,6 +26,9 @@
 		<url>git@github.com:svenkubiak/embedded-mongodb.git</url>
 		<tag>HEAD</tag>
 	</scm>
+	<name>Embedded MongoDB</name>
+	<description>Embedded MongoDB for unit testing purposes based on flapdoodle-oss/de.flapdoodle.embed.mongo</description>
+	<url>https://github.com/svenkubiak/embedded-mongodb</url>	
 	<build>
 		<plugins>
 			<plugin>
