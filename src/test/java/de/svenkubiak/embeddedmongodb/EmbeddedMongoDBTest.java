@@ -25,7 +25,7 @@ public class EmbeddedMongoDBTest {
 	public void testMongoDB() {
 		MongoClient mongoClient = null;
 		try {
-			mongoClient = new MongoClient(EmbeddedMongoDB.host, EmbeddedMongoDB.port);
+			mongoClient = new MongoClient(EmbeddedMongoDB.getHost(), EmbeddedMongoDB.getPort());
 		} catch (UnknownHostException e) {
 			fail("Failed to created MongoClient");
 		}

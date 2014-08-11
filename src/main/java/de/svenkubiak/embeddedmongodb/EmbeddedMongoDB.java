@@ -17,17 +17,17 @@ import de.flapdoodle.embed.mongo.distribution.Version;
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
     private static final MongodStarter STARTER = MongodStarter.getDefaultInstance();
+    private static final String HOST = "127.0.0.1";
     private static MongodExecutable mongodExecutable;
     private static EmbeddedMongoDB instance;
-    public static int port = 0;
-    public static String host = "127.0.0.1";
+    private static int port = 0;
     
     private EmbeddedMongoDB() {
-    	port = (int) (Math.random() * (65000 - 28000) + 28000);
-    	try {
+        port = (int) (Math.random() * (65000 - 28000) + 28000);
+        try {
             mongodExecutable = STARTER.prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)
-            .net(new Net(port, false))
+            .net(new Net(HOST, port, false))
             .build());
 
             mongodExecutable.start();
@@ -44,6 +44,14 @@ public class EmbeddedMongoDB {
     }
     
     public static void shutdown() {
-    	mongodExecutable.stop();
+        mongodExecutable.stop();
+    }
+    
+    public static int getPort() {
+        return port;
+    }
+    
+    public static String getHost() {
+        return HOST;
     }
 }
