@@ -20,10 +20,9 @@ public class EmbeddedMongoDB {
     private static final String HOST = "127.0.0.1";
     private static MongodExecutable mongodExecutable;
     private static EmbeddedMongoDB instance;
-    private static int port = 0;
+    private static int port = (int) (Math.random() * (65000 - 28000) + 28000);
     
     private EmbeddedMongoDB() {
-        port = (int) (Math.random() * (65000 - 28000) + 28000);
         try {
             mongodExecutable = STARTER.prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)
@@ -31,8 +30,10 @@ public class EmbeddedMongoDB {
             .build());
 
             mongodExecutable.start();
+            
+            LOG.info("Started embeeded mongodb on " + HOST + "@" + port);
         } catch (Exception e) {
-            LOG.error("Failed to start in embedded mongodb", e);
+            LOG.error("Failed to start embedded mongodb", e);
         }
     }
 
