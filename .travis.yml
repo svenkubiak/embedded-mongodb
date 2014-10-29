@@ -1,4 +1,4 @@
 language: java
-script: "mvn clean test -Dgpg.skip=true"
+script: "mvn clean test"
 notifications:
   email: sk@svenkubiak.com
