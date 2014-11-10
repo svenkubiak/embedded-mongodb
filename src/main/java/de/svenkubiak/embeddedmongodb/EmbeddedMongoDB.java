@@ -17,7 +17,7 @@ import de.flapdoodle.embed.mongo.distribution.Version;
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
     private static final MongodStarter STARTER = MongodStarter.getDefaultInstance();
-    private static final String HOST = "127.0.0.1";
+    private static final String HOST = "localhost";
     private static MongodExecutable mongodExecutable;
     private static EmbeddedMongoDB instance;
     private static int port = (int) (Math.random() * (65000 - 28000) + 28000);
