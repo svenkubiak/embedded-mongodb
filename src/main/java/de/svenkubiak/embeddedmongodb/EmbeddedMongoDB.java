@@ -19,7 +19,7 @@ public class EmbeddedMongoDB {
     private static final MongodStarter STARTER = MongodStarter.getDefaultInstance();
     private static final String HOST = "localhost";
     private static MongodExecutable mongodExecutable;
-    private static EmbeddedMongoDB instance;
+    private static EmbeddedMongoDB embeddedMongoDB;
     private static int port = (int) (Math.random() * (65000 - 28000) + 28000);
     
     private EmbeddedMongoDB() {
@@ -31,17 +31,17 @@ public class EmbeddedMongoDB {
 
             mongodExecutable.start();
             
-            LOG.info("Started embeeded mongodb on " + HOST + "@" + port);
+            LOG.info("Started embedded mongodb on " + HOST + " @ " + port);
         } catch (Exception e) {
-            LOG.error("Failed to start embedded mongodb", e);
+            LOG.error("Failed to start embedded mongodb on " + HOST + " @ " + port, e);
         }
     }
 
     public static EmbeddedMongoDB getInstance() {
-        if (instance == null) {
-            instance = new EmbeddedMongoDB();
+        if (embeddedMongoDB == null) {
+            embeddedMongoDB = new EmbeddedMongoDB();
         }
-        return instance;
+        return embeddedMongoDB;
     }
     
     public static void shutdown() {

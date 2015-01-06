@@ -22,13 +22,17 @@ Usage
 
 	EmbeddedMongoDB.getInstance();
 	
-You may want to do this in an @Before annotated class of your unit tests
+You may want to do this in an @Before annotated class of your unit tests!
 	
 You can get the port and host using 
 
-	EmbeddedMongoDB.port;
-	EmbeddedMongoDB.host;
+	EmbeddedMongoDB.getPort();
+	EmbeddedMongoDB.getHost();
+
+You can shut down the mongodb instance with the following command:
+
+	EmbeddedMongoDB.shutdown();
 	
-By default EmbeddedMongoDB runs on port 127.0.0.1 and a random port between 28000 and 65000.
+EmbeddedMongoDB always runs on localhost and a random port between 28000 and 65000.
 
 [1]: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
