@@ -1,5 +1,7 @@
 package de.svenkubiak.embeddedmongodb;
 
+import java.security.SecureRandom;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,10 +22,12 @@ public class EmbeddedMongoDB {
     private static final String HOST = "localhost";
     private static MongodExecutable mongodExecutable;
     private static EmbeddedMongoDB embeddedMongoDB;
-    private static int port = (int) (Math.random() * (65000 - 28000) + 28000);
+    private static int port;
     
     private EmbeddedMongoDB() {
         try {
+            port = SecureRandom.getInstance("SHA1PRNG").nextInt(50000) + 1024;
+            
             mongodExecutable = STARTER.prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)
             .net(new Net(HOST, port, false))
