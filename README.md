@@ -23,17 +23,11 @@ Usage
         <scope>test</scope>
     </dependency>
 
-2) There is no specific start command. The EmbeddedMongo will start upon first instantiation.
-
-You can get the port and host using which you e.g. can pass to your MongoClient.
+2) For using the Embedded MongoDB you can get the host and port with the following commands:
 
 	EmbeddedMongo.DB.getPort();
 	EmbeddedMongo.DB.getHost();
 
-You can shut down the mongodb instance with the following command:
-
-	EmbeddedMongo.DB.shutdown();
-	
-EmbeddedMongo always runs on localhost and a random port between 1024 and 50000.
+Embedded MongoDB always runs on localhost and a random port between 1024 and 50000.
 
 [1]: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo

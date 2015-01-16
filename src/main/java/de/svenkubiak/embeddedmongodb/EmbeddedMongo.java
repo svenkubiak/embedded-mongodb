@@ -27,7 +27,7 @@ public enum EmbeddedMongo {
             .net(new Net(LOCALHOST, this.port, false))
             .build()).start();
         } catch (NoSuchAlgorithmException | IOException e) {
-            throw new RuntimeException("Failed to start EmbeddedMongoDB", e);
+            e.printStackTrace();
         }
     }
     
