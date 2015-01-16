@@ -23,21 +23,17 @@ Usage
         <scope>test</scope>
     </dependency>
 
-2) Start up the embedded mongodb with the following command:
+2) There is no specific start command. The EmbeddedMongo will start upon first instantiation.
 
-	EmbeddedMongoDB.getInstance();
-	
-You may want to do this in an @Before annotated class of your unit tests!
-	
-You can get the port and host using 
+You can get the port and host using which you e.g. can pass to your MongoClient.
 
-	EmbeddedMongoDB.getPort();
-	EmbeddedMongoDB.getHost();
+	EmbeddedMongo.DB.getPort();
+	EmbeddedMongo.DB.getHost();
 
 You can shut down the mongodb instance with the following command:
 
-	EmbeddedMongoDB.shutdown();
+	EmbeddedMongo.DB.shutdown();
 	
-EmbeddedMongoDB always runs on localhost and a random port between 28000 and 65000.
+EmbeddedMongo always runs on localhost and a random port between 1024 and 50000.
 
 [1]: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
