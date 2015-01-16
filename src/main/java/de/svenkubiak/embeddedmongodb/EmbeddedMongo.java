@@ -1,9 +1,8 @@
 package de.svenkubiak.embeddedmongodb;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -17,26 +16,22 @@ import de.flapdoodle.embed.mongo.distribution.Version;
  */
 public enum EmbeddedMongo {
     DB;
-    private final Logger logger = LoggerFactory.getLogger(EmbeddedMongo.class);
-    private final MongodStarter mongodStarter = MongodStarter.getDefaultInstance();
-    private final String host = "localhost";
+    private String host = "localhost";
     private int port;
     private MongodExecutable mongodExecutable;
     
     private EmbeddedMongo() {
         try {
             port = SecureRandom.getInstance("SHA1PRNG").nextInt(50000) + 1024;
-            
-            mongodExecutable = mongodStarter.prepare(new MongodConfigBuilder()
+
+            mongodExecutable = MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)
             .net(new Net(this.host, port, false))
             .build());
 
             mongodExecutable.start();
-            
-            logger.info("Started embedded mongodb on " + this.host + " @ " + port);
-        } catch (Exception e) {
-            logger.error("Failed to start embedded mongodb on " + this.host + " @ " + port, e);
+        } catch (NoSuchAlgorithmException | IOException e) {
+            e.printStackTrace();
         }
     }
     
