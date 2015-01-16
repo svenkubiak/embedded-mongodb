@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
@@ -16,27 +15,20 @@ import de.flapdoodle.embed.mongo.distribution.Version;
  */
 public enum EmbeddedMongo {
     DB;
-    private String host = "localhost";
+    private static final String LOCALHOST = "localhost";
     private int port;
-    private MongodExecutable mongodExecutable;
     
     private EmbeddedMongo() {
         try {
-            port = SecureRandom.getInstance("SHA1PRNG").nextInt(50000) + 1024;
+            this.port = SecureRandom.getInstance("SHA1PRNG").nextInt(50000) + 1024;
 
-            mongodExecutable = MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
+            MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)
-            .net(new Net(this.host, port, false))
-            .build());
-
-            mongodExecutable.start();
+            .net(new Net(LOCALHOST, this.port, false))
+            .build()).start();
         } catch (NoSuchAlgorithmException | IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to start EmbeddedMongoDB", e);
         }
-    }
-    
-    public void shutdown() {
-        this.mongodExecutable.stop();
     }
     
     public int getPort() {
@@ -44,6 +36,6 @@ public enum EmbeddedMongo {
     }
     
     public String getHost() {
-        return this.host;
+        return LOCALHOST;
     }
 }

@@ -6,7 +6,6 @@ import static org.junit.Assert.fail;
 
 import java.net.UnknownHostException;
 
-import org.junit.After;
 import org.junit.Test;
 
 import com.mongodb.BasicDBObject;
@@ -20,7 +19,7 @@ public class EmbeddedMongoDBTest {
 	public void testMongoDB() {
 		MongoClient mongoClient = null;
 		try {
-			mongoClient = new MongoClient(EmbeddedMongo.DB.getHost(), EmbeddedMongo.DB.getPort());
+			mongoClient = new MongoClient("localhost", EmbeddedMongo.DB.getPort());
 		} catch (UnknownHostException e) {
 			fail("Failed to created MongoClient");
 		}
@@ -37,10 +36,5 @@ public class EmbeddedMongoDBTest {
 		}
 		
 		assertEquals(100, collection.count());
-	}
-	
-	@After
-	public void shutdown() {
-	    EmbeddedMongo.DB.shutdown();
 	}
 }
