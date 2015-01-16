@@ -17,8 +17,8 @@ import de.flapdoodle.embed.mongo.distribution.Version;
  */
 public enum EmbeddedMongo {
     DB;
-    private final Logger LOG = LoggerFactory.getLogger(EmbeddedMongo.class);
-    private final MongodStarter STARTER = MongodStarter.getDefaultInstance();
+    private final Logger logger = LoggerFactory.getLogger(EmbeddedMongo.class);
+    private final MongodStarter mongodStarter = MongodStarter.getDefaultInstance();
     private final String host = "localhost";
     private int port;
     private MongodExecutable mongodExecutable;
@@ -27,16 +27,16 @@ public enum EmbeddedMongo {
         try {
             port = SecureRandom.getInstance("SHA1PRNG").nextInt(50000) + 1024;
             
-            mongodExecutable = STARTER.prepare(new MongodConfigBuilder()
+            mongodExecutable = mongodStarter.prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)
             .net(new Net(this.host, port, false))
             .build());
 
             mongodExecutable.start();
             
-            LOG.info("Started embedded mongodb on " + this.host + " @ " + port);
+            logger.info("Started embedded mongodb on " + this.host + " @ " + port);
         } catch (Exception e) {
-            LOG.error("Failed to start embedded mongodb on " + this.host + " @ " + port, e);
+            logger.error("Failed to start embedded mongodb on " + this.host + " @ " + port, e);
         }
     }
     
