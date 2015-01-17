@@ -4,14 +4,10 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Arrays;
 
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Preconditions;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
 
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
@@ -39,7 +35,11 @@ public enum EmbeddedMongo {
             LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start embedded MongoDB", e);
         }
     }
-    
+    /**
+     * Creates a MongoClient connected against the embedded MongoDB
+     * 
+     * @return MongoClient instance
+     */
     public MongoClient getMongoClient() {
         MongoClient mongoClient = null;
         try {
@@ -50,28 +50,21 @@ public enum EmbeddedMongo {
         
         return mongoClient;
     }
-    
-    public MongoClient getMongoClient(String username, String password, String dbName) {
-        Preconditions.checkNotNull(username, "Username is required for embedded MongoDB with authentication");
-        Preconditions.checkNotNull(password, "Password is required for embedded MongoDB with authentication");
-        Preconditions.checkNotNull(dbName, "Database name is required for embedded MongoDB with authentication");
-        
-        MongoClient mongoClient = null;
-        try {
-            mongoClient = new MongoClient(
-                        new ServerAddress(this.getHost(), this.getPort()),
-                        Arrays.asList(MongoCredential.createMongoCRCredential(username, dbName, password.toCharArray())));
-        } catch (UnknownHostException e) {
-            LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to create MongoClient with authentication for embedded MongoDB", e);
-        }
-        
-        return mongoClient;
-     }
-    
+
+    /**
+     * Returns the port of the embedded MongoDB
+     * 
+     * @return int the port number
+     */
     public int getPort() {
         return this.port;
     }
     
+    /**
+     * Returns the host of the embedded MongoDB
+
+     * @return String the host
+     */
     public String getHost() {
         return LOCALHOST;
     }
