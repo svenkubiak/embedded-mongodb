@@ -2,9 +2,6 @@ package de.svenkubiak.embeddedmongodb;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import java.net.UnknownHostException;
 
 import org.junit.Test;
 
@@ -13,16 +10,16 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 
+/**
+ * 
+ * @author svenkubiak
+ *
+ */
 public class EmbeddedMongoDBTest {
 	
 	@Test
 	public void testMongoDB() {
-		MongoClient mongoClient = null;
-		try {
-			mongoClient = new MongoClient("localhost", EmbeddedMongo.DB.getPort());
-		} catch (UnknownHostException e) {
-			fail("Failed to created MongoClient");
-		}
+	    MongoClient mongoClient = EmbeddedMongo.DB.getMongoClient();
 		assertNotNull(mongoClient);
 		
 		DB db = mongoClient.getDB("embeddedTestDB");

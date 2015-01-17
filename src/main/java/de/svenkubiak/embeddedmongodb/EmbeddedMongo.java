@@ -15,17 +15,18 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 
 /**
- * @author skubiak
+ * @author svenkubiak
  *
  */
 public enum EmbeddedMongo {
     DB;
+    private static final String ALGORITHM = "SHA1PRNG";
     private static final String LOCALHOST = "localhost";
     private int port;
     
     private EmbeddedMongo() {
         try {
-            this.port = SecureRandom.getInstance("SHA1PRNG").nextInt(50000) + 1024;
+            this.port = SecureRandom.getInstance(ALGORITHM).nextInt(50000) + 1024;
 
             MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)
