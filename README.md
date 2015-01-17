@@ -23,7 +23,11 @@ Usage
         <scope>test</scope>
     </dependency>
 
-2) For using the Embedded MongoDB you can get the host and port with the following commands:
+2) The most likely use case is to get a MongoClient connected against the embedded Mongo DB. You can get a MongoClient by calling the following method:
+
+	EmbeddedMongo.DB.getMongoClient();
+	
+If you want create the MongoClient yourself, you have two convenient methods to get the port and the host of the embedded Mongo DB.
 
 	EmbeddedMongo.DB.getPort();
 	EmbeddedMongo.DB.getHost();
