@@ -20,13 +20,15 @@ import de.flapdoodle.embed.mongo.distribution.Version;
  */
 public enum EmbeddedMongo {
     DB;
+    private static final int MIN_PORT = 1025;
+    private static final int MAX_PORT = 50000;
     private static final String ALGORITHM = "SHA1PRNG";
     private static final String LOCALHOST = "localhost";
     private int port;
     
     private EmbeddedMongo() {
         try {
-            this.port = SecureRandom.getInstance(ALGORITHM).nextInt(50000) + 1024;
+            this.port = SecureRandom.getInstance(ALGORITHM).nextInt(MAX_PORT) + MIN_PORT;
 
             MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
             .version(Version.Main.V2_6)

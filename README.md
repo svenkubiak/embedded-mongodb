@@ -32,6 +32,6 @@ If you want create the MongoClient yourself, you have two convenient methods to 
 	EmbeddedMongo.DB.getPort();
 	EmbeddedMongo.DB.getHost();
 
-Embedded MongoDB always runs on localhost and a random port between 1024 and 50000.
+Embedded MongoDB always runs on localhost and a random port between 1025 and 50000.
 
 [1]: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
