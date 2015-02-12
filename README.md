@@ -1,7 +1,7 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.svenkubiak/embedded-mongodb/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.svenkubiak/embedded-mongodb)
 [![Build Status](https://secure.travis-ci.org/svenkubiak/embedded-mongodb.png?branch=master)](http://travis-ci.org/svenkubiak/embedded-mongodb)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/4046/badge.svg)](https://scan.coverity.com/projects/4046)
-[![Dependency Status](https://www.versioneye.com/user/projects/54dcba52c1bbbd5f820004c5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54dcba52c1bbbd5f820004c5)
+[![Dependency Status](https://www.versioneye.com/user/projects/54dcb9b3c1bbbda0130003fc/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54dcb9b3c1bbbda0130003fc)
 
 If this software is useful to you, you can support further development by using Flattr. Thank you!
 
