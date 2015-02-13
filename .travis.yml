@@ -1,4 +1,6 @@
 language: java
-script: "mvn clean test"
+jdk:
+  - oraclejdk8
+script: "mvn clean test -Dninja.mode=test -Dgpg.skip=true"
 notifications:
   email: sk@svenkubiak.com
