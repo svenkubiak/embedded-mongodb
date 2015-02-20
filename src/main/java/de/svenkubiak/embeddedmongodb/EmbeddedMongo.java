@@ -31,11 +31,13 @@ public enum EmbeddedMongo {
             this.port = SecureRandom.getInstance(ALGORITHM).nextInt(MAX_PORT) + MIN_PORT;
 
             MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
-            .version(Version.Main.V2_6)
+            .version(Version.Main.PRODUCTION)
             .net(new Net(LOCALHOST, this.port, false))
             .build()).start();
+            
+            LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully created EmbeddedMongo @ {}:{}", LOCALHOST, this.port);
         } catch (NoSuchAlgorithmException | IOException e) {
-            LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start embedded MongoDB", e);
+            LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start EmbeddedMongo", e);
         }
     }
     /**
@@ -48,7 +50,7 @@ public enum EmbeddedMongo {
         try {
             mongoClient = new MongoClient(this.getHost(), this.getPort());
         } catch (UnknownHostException e) {
-            LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to create MongoClient for embedded MongoDB", e);
+            LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to create MongoClient for EmbeddedMongo", e);
         }
         
         return mongoClient;
