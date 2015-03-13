@@ -30,6 +30,7 @@ public class EmbeddedMongoRunnable implements Runnable {
         } 
         
         while(true) {
+            //intentionally left blank
         }
     }
 }
