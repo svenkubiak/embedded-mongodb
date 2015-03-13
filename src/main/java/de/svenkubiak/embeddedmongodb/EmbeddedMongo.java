@@ -61,15 +61,16 @@ public enum EmbeddedMongo {
     }
     
     public void start() {
+        Net net = new Net(this.mongoHost, this.mongoPort, this.mongoIPv6);
         if (this.mongoThreaded) {
-            EmbeddedMongoRunnable runnable = new EmbeddedMongoRunnable(new Net(this.mongoHost, this.mongoPort, this.mongoIPv6));
+            EmbeddedMongoRunnable runnable = new EmbeddedMongoRunnable(net);
             Thread thread = new Thread(runnable);
             thread.start();
         } else {
             try {
                 MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
                 .version(Version.Main.PRODUCTION)
-                .net(new Net(this.mongoHost, this.mongoPort, this.mongoIPv6))
+                .net(net)
                 .build()).start();
                 
                 LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully created EmbeddedMongo @ {}:{}", LOCALHOST, this.mongoPort);
