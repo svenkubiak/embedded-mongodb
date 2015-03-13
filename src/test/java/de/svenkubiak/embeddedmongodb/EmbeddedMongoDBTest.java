@@ -18,7 +18,9 @@ import com.mongodb.MongoClient;
 public class EmbeddedMongoDBTest {
 	
 	@Test
-	public void testMongoDB() {
+	public void testMongoDBThreaded() {
+	    EmbeddedMongo.DB.threaded(true).start();
+	    
 	    MongoClient mongoClient = EmbeddedMongo.DB.getMongoClient();
 		assertNotNull(mongoClient);
 		
