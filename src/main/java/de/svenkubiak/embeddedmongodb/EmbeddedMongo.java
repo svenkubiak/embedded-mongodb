@@ -24,6 +24,7 @@ public enum EmbeddedMongo {
     private static final int MAX_PORT = 50000;
     private static final String ALGORITHM = "SHA1PRNG";
     private static final String LOCALHOST = "localhost";
+    private boolean active = false;
     private boolean mongoThreaded;
     private boolean mongoIPv6;
     private String mongoHost;
@@ -61,22 +62,27 @@ public enum EmbeddedMongo {
     }
     
     public void start() {
-        Net net = new Net(this.mongoHost, this.mongoPort, this.mongoIPv6);
-        if (this.mongoThreaded) {
-            EmbeddedMongoRunnable runnable = new EmbeddedMongoRunnable(net);
-            Thread thread = new Thread(runnable);
-            thread.start();
-        } else {
-            try {
-                MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
-                .version(Version.Main.PRODUCTION)
-                .net(net)
-                .build()).start();
+        if (!active) {
+            Net net = new Net(this.mongoHost, this.mongoPort, this.mongoIPv6);
+            if (this.mongoThreaded) {
+                EmbeddedMongoRunnable runnable = new EmbeddedMongoRunnable(net);
+                Thread thread = new Thread(runnable);
+                thread.start();
                 
-                LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully created EmbeddedMongo @ {}:{}", LOCALHOST, this.mongoPort);
-            } catch (IOException e) {
-                LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start EmbeddedMongo", e);
-            }  
+                active = true;
+            } else {
+                try {
+                    MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
+                    .version(Version.Main.PRODUCTION)
+                    .net(net)
+                    .build()).start();
+                    
+                    LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully created EmbeddedMongo @ {}:{}", LOCALHOST, this.mongoPort);
+                    active = true;
+                } catch (IOException e) {
+                    LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start EmbeddedMongo", e);
+                }  
+            }
         }
     }
     
