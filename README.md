@@ -24,7 +24,13 @@ Usage
         <scope>test</scope>
     </dependency>
 
-2) The most likely use case is to get a MongoClient connected against the embedded Mongo DB. You can get a MongoClient by calling the following method:
+2) The most likely use case is to start the embedded MongoDB. You can do that by calling the following method
+
+	EmbeddedMongo.DB.start();
+	
+In a test case you might want to do that in the constructor, so that the embedded MongoDB stays open for all tests.
+
+3) To get a MongoClient connected against the embedded MongoDB, call the following method:
 
 	EmbeddedMongo.DB.getMongoClient();
 	
@@ -33,6 +39,5 @@ If you want create the MongoClient yourself, you have two convenient methods to 
 	EmbeddedMongo.DB.getPort();
 	EmbeddedMongo.DB.getHost();
 
-Embedded MongoDB always runs on localhost and a random port between 1025 and 50000.
 
 [1]: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
