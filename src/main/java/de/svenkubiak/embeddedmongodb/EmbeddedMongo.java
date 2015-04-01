@@ -1,7 +1,6 @@
 package de.svenkubiak.embeddedmongodb;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
@@ -73,7 +72,7 @@ public enum EmbeddedMongo {
             } else {
                 try {
                     MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
-                    .version(Version.Main.PRODUCTION)
+                    .version(Version.Main.V3_0)
                     .net(net)
                     .build()).start();
                     
@@ -87,14 +86,7 @@ public enum EmbeddedMongo {
     }
     
     public MongoClient getMongoClient() {
-        MongoClient mongoClient = null;
-        try {
-            mongoClient = new MongoClient(this.getHost(), this.getPort());
-        } catch (UnknownHostException e) {
-            LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to create MongoClient for EmbeddedMongo", e);
-        }
-        
-        return mongoClient;
+        return new MongoClient(this.getHost(), this.getPort());
     }
 
     public int getPort() {
