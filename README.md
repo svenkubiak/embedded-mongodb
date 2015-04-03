@@ -12,6 +12,10 @@ embedded-mongodb
 
 Embedded MongoDB for unit testing purposes based on [flapdoodle-oss/de.flapdoodle.embed.mongo][1]
 
+**IMPORTANT!**
+Version 2.x.x uses MongoDB Java-Driver 2.x
+Version 3.x.x uses MongoDB Java-Driver 3.x
+
 Usage
 ------------------
 
