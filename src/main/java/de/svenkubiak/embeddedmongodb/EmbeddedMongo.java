@@ -23,21 +23,15 @@ public enum EmbeddedMongo {
     private static final int MIN_PORT = 1025;
     private static final int MAX_PORT = 50000;
     private static final String ALGORITHM = "SHA1PRNG";
-    private static final String LOCALHOST = "localhost";
-    private EmbeddedMongoRunnable runnable;
     private MongodProcess mongodProcess;
     private boolean active = false;
-    private boolean mongoThreaded;
-    private boolean mongoIPv6;
-    private String mongoHost;
+    private boolean mongoIPv6 = false;
+    private String mongoHost = "localhost";
     private int mongoPort;
     
     private EmbeddedMongo() {
         try {
             this.mongoPort = SecureRandom.getInstance(ALGORITHM).nextInt(MAX_PORT) + MIN_PORT;
-            this.mongoHost = LOCALHOST;
-            this.mongoThreaded = false;
-            this.mongoIPv6 = false;
         } catch (NoSuchAlgorithmException e) {
             LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to init EmbeddedMongo", e);
         }
@@ -53,49 +47,33 @@ public enum EmbeddedMongo {
         return this;
     }
     
-    public EmbeddedMongo threaded(boolean threaded) {
-        this.mongoThreaded = threaded;
-        return this;
-    }
-    
     public EmbeddedMongo ipv6(boolean ipv6) {
         this.mongoIPv6 = ipv6;
         return this;
     }
     
     public void start() {
-        if (!active) {
-            Net net = new Net(this.mongoHost, this.mongoPort, this.mongoIPv6);
-            if (this.mongoThreaded) {
-                this.runnable = new EmbeddedMongoRunnable(net);
-                Thread thread = new Thread(runnable);
-                thread.start();
+        if (!this.active) {
+            try {
+                this.mongodProcess = MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
+                .version(Version.Main.V3_0)
+                .net(new Net(this.mongoHost, this.mongoPort, this.mongoIPv6))
+                .build()).start();
                 
+                LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully started EmbeddedMongoDB @ {}:{}", this.mongoHost, this.mongoPort);
                 this.active = true;
-            } else {
-                try {
-                    this.mongodProcess = MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
-                    .version(Version.Main.V3_0)
-                    .net(net)
-                    .build()).start();
-                    
-                    LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully created EmbeddedMongo @ {}:{}", LOCALHOST, this.mongoPort);
-                    this.active = true;
-                } catch (IOException e) {
-                    LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start EmbeddedMongo", e);
-                }  
-            }
+            } catch (IOException e) {
+                LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start EmbeddedMongoDB", e);
+            }  
         }
     }
     
     public void stop() {
-        if (active) {
-            if (this.mongoThreaded) {
-                this.runnable.shutdown();
-            } else {
-                this.mongodProcess.stop();   
-            }
+        if (this.active) {
+            this.mongodProcess.stop();   
             this.active = false;
+            
+            LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully stopped EmbeddedMongoDB @ {}:{}", this.mongoHost, this.mongoPort);
         }
     }
     
@@ -109,10 +87,6 @@ public enum EmbeddedMongo {
     
     public String getHost() {
         return this.mongoHost;
-    }
-    
-    public boolean isThreaded() {
-        return this.mongoThreaded;
     }
     
     public boolean isIPv6() {
