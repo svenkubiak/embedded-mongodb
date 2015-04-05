@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mongodb.MongoClient;
 
+import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
@@ -23,6 +24,8 @@ public enum EmbeddedMongo {
     private static final int MAX_PORT = 50000;
     private static final String ALGORITHM = "SHA1PRNG";
     private static final String LOCALHOST = "localhost";
+    private EmbeddedMongoRunnable runnable;
+    private MongodProcess mongodProcess;
     private boolean active = false;
     private boolean mongoThreaded;
     private boolean mongoIPv6;
@@ -64,24 +67,35 @@ public enum EmbeddedMongo {
         if (!active) {
             Net net = new Net(this.mongoHost, this.mongoPort, this.mongoIPv6);
             if (this.mongoThreaded) {
-                EmbeddedMongoRunnable runnable = new EmbeddedMongoRunnable(net);
+                this.runnable = new EmbeddedMongoRunnable(net);
                 Thread thread = new Thread(runnable);
                 thread.start();
                 
-                active = true;
+                this.active = true;
             } else {
                 try {
-                    MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
+                    this.mongodProcess = MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
                     .version(Version.Main.V3_0)
                     .net(net)
                     .build()).start();
                     
                     LoggerFactory.getLogger(EmbeddedMongo.class).info("Successfully created EmbeddedMongo @ {}:{}", LOCALHOST, this.mongoPort);
-                    active = true;
+                    this.active = true;
                 } catch (IOException e) {
                     LoggerFactory.getLogger(EmbeddedMongo.class).error("Failed to start EmbeddedMongo", e);
                 }  
             }
+        }
+    }
+    
+    public void stop() {
+        if (active) {
+            if (this.mongoThreaded) {
+                this.runnable.shutdown();
+            } else {
+                this.mongodProcess.stop();   
+            }
+            this.active = false;
         }
     }
     

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.bson.Document;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mongodb.MongoClient;
@@ -16,11 +18,14 @@ import com.mongodb.client.MongoDatabase;
  *
  */
 public class EmbeddedMongoDBTest {
+    
+    @BeforeClass
+    public static void startup() {
+        EmbeddedMongo.DB.start();        
+    }
 	
 	@Test
 	public void testMongoDBThreaded() {
-	    EmbeddedMongo.DB.start();
-	    
 	    MongoClient mongoClient = EmbeddedMongo.DB.getMongoClient();
 		assertNotNull(mongoClient);
 		
@@ -36,4 +41,9 @@ public class EmbeddedMongoDBTest {
 		
 		assertEquals(100, collection.count());
 	}
+	
+    @AfterClass
+    public static void shutdown() {
+        EmbeddedMongo.DB.stop();        
+    }
 }
