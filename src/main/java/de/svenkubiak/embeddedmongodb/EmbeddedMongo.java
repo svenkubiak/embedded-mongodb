@@ -24,8 +24,8 @@ public enum EmbeddedMongo {
     private static final int MAX_PORT = 50000;
     private static final String ALGORITHM = "SHA1PRNG";
     private MongodProcess mongodProcess;
-    private boolean active = false;
-    private boolean mongoIPv6 = false;
+    private boolean active;
+    private boolean mongoIPv6;
     private String mongoHost = "localhost";
     private int mongoPort;
     
