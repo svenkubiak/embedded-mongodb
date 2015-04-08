@@ -14,7 +14,7 @@ Embedded MongoDB for unit testing purposes based on [flapdoodle-oss/de.flapdoodl
 
 **IMPORTANT!**
 Version 2.x.x uses MongoDB Java-Driver 2.x
-Version 3.x.x uses MongoDB Java-Driver 3.x
+Version 3.x.x/4.x.x uses MongoDB Java-Driver 3.x
 
 Usage
 ------------------
@@ -32,16 +32,28 @@ Usage
 
 	EmbeddedMongo.DB.start();
 	
-In a test case you might want to do that in the constructor, so that the embedded MongoDB stays open for all tests.
-
-3) To get a MongoClient connected against the embedded MongoDB, call the following method:
-
-	EmbeddedMongo.DB.getMongoClient();
 	
-If you want create the MongoClient yourself, you have two convenient methods to get the port and the host of the embedded Mongo DB.
+Example
+------------------
 
-	EmbeddedMongo.DB.getPort();
-	EmbeddedMongo.DB.getHost();
+If you have unit tests which rely on a MongoDB, it is recommended to use @BeforeClass and @AfterClass to startup and shutdown the Embedded mongoDB.
+
+	@BeforeClass
+	public static void startup() {
+		EmbeddedMongo.DB.port(28018).start();
+	}
+
+	@AfterClass
+	public static void startup() {
+		EmbeddedMongo.DB.stop();
+	}
+	
+With the following configuration in your application.conf
+
+	%test.ninja.mongodb.host=127.0.0.1
+	%test.ninja.mongodb.port=28018
+	%test.ninja.mongodb.dbname=mydb
+	%test.ninja.morphia.package=models
 
 
 [1]: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
