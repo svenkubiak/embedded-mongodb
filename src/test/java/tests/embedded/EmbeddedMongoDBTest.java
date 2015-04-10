@@ -1,4 +1,4 @@
-package de.svenkubiak.embeddedmongodb;
+package tests.embedded;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -11,6 +11,8 @@ import org.junit.Test;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
+import de.svenkubiak.embeddedmongodb.EmbeddedMongo;
 
 /**
  * 
