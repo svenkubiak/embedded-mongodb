@@ -3,4 +3,4 @@ jdk:
   - oraclejdk8
 script: "mvn clean test -Dninja.mode=test -Dgpg.skip=true"
 notifications:
-  email: sk@svenkubiak.com
+  email: sk@svenkubiak.de
