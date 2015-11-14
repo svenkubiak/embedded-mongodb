@@ -44,7 +44,7 @@ If you have unit tests which rely on a MongoDB, it is recommended to use @Before
 	}
 
 	@AfterClass
-	public static void startup() {
+	public static void shutdown() {
 		EmbeddedMongo.DB.stop();
 	}
 	
