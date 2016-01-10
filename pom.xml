@@ -131,7 +131,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>1.50.1</version>
+			<version>1.50.2</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
