@@ -56,7 +56,7 @@ public enum EmbeddedMongo {
         if (!this.active) {
             try {
                 this.mongodProcess = MongodStarter.getDefaultInstance().prepare(new MongodConfigBuilder()
-                .version(Version.Main.V3_4)
+                .version(Version.Main.PRODUCTION)
                 .net(new Net(this.mongoHost, this.mongoPort, this.mongoIPv6))
                 .build()).start();
 
