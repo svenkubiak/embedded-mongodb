@@ -20,9 +20,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
 	<scm>
 		<connection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</connection>
 		<developerConnection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</developerConnection>
