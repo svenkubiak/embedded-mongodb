@@ -41,7 +41,7 @@ public class EmbeddedMongoDBTest {
 			collection.insertOne(new Document("i", i));
 		}
 		
-		assertEquals(100, collection.count());
+		assertEquals(100, collection.countDocuments());
 	}
 	
     @AfterClass
