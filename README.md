@@ -24,7 +24,7 @@ Usage
 
 	EmbeddedMongoDB.create().start();
 	
-This will start an in-memory MongoDB at localhost on port 29019.
+This will start an in-memory MongoDB at localhost on port 29019 with the latest "production" version.
 
 Options
 ------------------
