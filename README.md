@@ -5,11 +5,9 @@
 embedded-mongodb
 ================
 
-Embedded MongoDB for unit testing purposes based on [flapdoodle-oss/de.flapdoodle.embed.mongo][1]
+Embedded MongoDB for unit testing and developement purposes. Based on [flapdoodle-oss/de.flapdoodle.embed.mongo][1]
 
-**IMPORTANT!**
-Version 2.x.x uses MongoDB Java-Driver 2.x
-Version 3.x.x/4.x.x uses MongoDB Java-Driver 3.x
+Requires Java 11 and is based on Mongo Java 3.x
 
 Usage
 ------------------
@@ -20,35 +18,26 @@ Usage
         <groupId>de.svenkubiak</groupId>
         <artifactId>embedded-mongodb</artifactId>
         <version>x.x.x</version>
-        <scope>test</scope>
     </dependency>
 
 2) The most likely use case is to start the embedded MongoDB. You can do that by calling the following method
 
-	EmbeddedMongo.DB.start();
+	EmbeddedMongoDB.create().start();
 	
-	
-Example
+This will start an in-memory MongoDB at localhost on port 29019.
+
+Options
 ------------------
 
-If you have unit tests which rely on a MongoDB, it is recommended to use @BeforeClass and @AfterClass to startup and shutdown the Embedded mongoDB.
-
-	@BeforeClass
-	public static void startup() {
-		EmbeddedMongo.DB.port(28018).start();
-	}
-
-	@AfterClass
-	public static void shutdown() {
-		EmbeddedMongo.DB.stop();
-	}
-	
-With the following configuration in your application.conf
-
-	%test.ninja.mongodb.host=127.0.0.1
-	%test.ninja.mongodb.port=28018
-	%test.ninja.mongodb.dbname=mydb
-	%test.ninja.morphia.package=models
+    EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create()
+        .withHost("localhost")
+        .withPort(27017)
+        .withVersion(Main.V3_6)
+        .start();
+        
+    if (embeddedMongoDB.isActive()) {
+    	//do something
+    }
 
 
 [1]: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
