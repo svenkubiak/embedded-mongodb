@@ -20,13 +20,13 @@ Usage
 		<version>x.x.x</version>
 	</dependency>
 ```
-2) The most likely use case is to start the embedded MongoDB. You can do that by calling the following method
+2) Start the embedded MongoDB by calling the following method
 ```
 	EmbeddedMongoDB.create().start();
 ```	
-This will start an in-memory MongoDB at localhost on port 29019 with the latest "production" version.
+This will start an in-memory MongoDB with default options at localhost on port 29019 with the latest "production" version of Mongo DB.
 
-Options
+Additional options
 ------------------
 
     EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create()
