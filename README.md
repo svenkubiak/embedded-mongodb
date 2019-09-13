@@ -7,23 +7,23 @@ embedded-mongodb
 
 Embedded MongoDB for unit testing and developement purposes. Based on [flapdoodle-oss/de.flapdoodle.embed.mongo][1]
 
-Requires Java 11 and is based on Mongo Java 3.x
+Requires Java 11.
 
 Usage
 ------------------
 
 1) Add the embedded-mongodb dependency to your pom.xml:
-
-    <dependency>
-        <groupId>de.svenkubiak</groupId>
-        <artifactId>embedded-mongodb</artifactId>
-        <version>x.x.x</version>
-    </dependency>
-
+```
+	<dependency>
+		<groupId>de.svenkubiak</groupId>
+		<artifactId>embedded-mongodb</artifactId>
+		<version>x.x.x</version>
+	</dependency>
+```
 2) The most likely use case is to start the embedded MongoDB. You can do that by calling the following method
-
+```
 	EmbeddedMongoDB.create().start();
-	
+```	
 This will start an in-memory MongoDB at localhost on port 29019 with the latest "production" version.
 
 Options
