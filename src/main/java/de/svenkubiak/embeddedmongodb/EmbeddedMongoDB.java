@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import de.flapdoodle.embed.mongo.Command;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
+import de.flapdoodle.embed.mongo.config.Defaults;
+import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.config.Net;
-import de.flapdoodle.embed.mongo.config.RuntimeConfigBuilder;
 import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.process.config.IRuntimeConfig;
+import de.flapdoodle.embed.process.config.RuntimeConfig;
 import de.flapdoodle.embed.process.config.io.ProcessOutput;
 
 /**
@@ -88,15 +88,16 @@ public class EmbeddedMongoDB {
     public EmbeddedMongoDB start() {
         if (!this.active) {
             try {
-                IRuntimeConfig runtimeConfig = new RuntimeConfigBuilder()
-                        .defaultsWithLogger(Command.MongoD, LOG)
+                Command command = Command.MongoD;
+                RuntimeConfig runtimeConfig = Defaults.runtimeConfigFor(command)
                         .processOutput(ProcessOutput.getDefaultInstanceSilent())
                         .build();
                 
-                this.mongodProcess = MongodStarter.getInstance(runtimeConfig).prepare(new MongodConfigBuilder()
-                .version(this.version)
-                .net(new Net(this.host, this.port, false))
-                .build()).start();
+                this.mongodProcess = MongodStarter.getInstance(runtimeConfig).prepare(MongodConfig.builder()
+                        .version(this.version)
+                        .net(new Net(this.host, this.port, false))
+                        .build())
+                        .start();
 
                 this.active = true;
                 LOG.info("Successfully started EmbeddedMongoDB @ {}:{}", this.host, this.port);
