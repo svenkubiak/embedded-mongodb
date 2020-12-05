@@ -1,6 +1,7 @@
 package de.svenkubiak.embeddedmongodb;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -86,7 +87,7 @@ public class EmbeddedMongoDB {
      * @return EmbeddedMongoDB instance 
      */
     public EmbeddedMongoDB start() {
-        if (!this.active) {
+        if (!this.active && !inUse(this.host, this.port)) {
             try {
                 Command command = Command.MongoD;
                 RuntimeConfig runtimeConfig = Defaults.runtimeConfigFor(command)
@@ -107,6 +108,27 @@ public class EmbeddedMongoDB {
         }
         
         return this;
+    }
+    
+    
+    /**
+     * Checks if the given host and port is already in use
+     * 
+     * @param host The host to check
+     * @param port The port to check
+     * @return True is port is in use, false otherwise
+     */
+    private boolean inUse(String host, int port) {
+        boolean result = false;
+
+        try {
+            (new Socket(host, port)).close();
+            result = true;
+        } catch (IOException e) {
+            LOG.warn("Did not (re-)start EmbeddedMongoDB @ {}:{} - looks like port is already in use?!", this.host, this.port, e);
+        }
+
+        return result;
     }
     
     /**
