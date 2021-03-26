@@ -215,13 +215,13 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.7.0</version>
+			<version>5.8.0-M1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
-			<version>3.12.7</version>
+			<version>3.12.8</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
