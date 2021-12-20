@@ -1,7 +1,7 @@
 package de.svenkubiak.embeddedmongodb;
 
 import java.io.IOException;
-import java.net.Socket;
+import java.net.ServerSocket;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -15,7 +15,10 @@ import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.config.RuntimeConfig;
-import de.flapdoodle.embed.process.config.io.ProcessOutput;
+import de.flapdoodle.embed.process.config.process.ImmutableProcessOutput;
+import de.flapdoodle.embed.process.config.process.ProcessOutput;
+import de.flapdoodle.embed.process.io.Processors;
+import de.flapdoodle.embed.process.io.Slf4jLevel;
 
 /**
  * 
@@ -87,11 +90,17 @@ public class EmbeddedMongoDB {
      * @return EmbeddedMongoDB instance 
      */
     public EmbeddedMongoDB start() {
-        if (!this.active && !inUse(this.host, this.port)) {
+        if (!this.active && !inUse(this.port)) {
             try {
+                ImmutableProcessOutput processOutput = ProcessOutput.builder()
+                    .error(Processors.logTo(LOG, Slf4jLevel.ERROR))
+                    .commands(Processors.logTo(LOG, Slf4jLevel.DEBUG))
+                    .output(Processors.logTo(LOG, Slf4jLevel.DEBUG))
+                    .build();
+                
                 Command command = Command.MongoD;
                 RuntimeConfig runtimeConfig = Defaults.runtimeConfigFor(command)
-                        .processOutput(ProcessOutput.getDefaultInstanceSilent())
+                        .processOutput(processOutput)
                         .build();
                 
                 this.mongodProcess = MongodStarter.getInstance(runtimeConfig).prepare(MongodConfig.builder()
@@ -105,6 +114,8 @@ public class EmbeddedMongoDB {
             } catch (final IOException e) {
                 LOG.error("Failed to start EmbeddedMongoDB @ {}:{}", this.host, this.port, e);
             }
+        } else {
+            LOG.warn("Could not start EmbeddedMongoDB. Either already active or port in use");
         }
         
         return this;
@@ -118,13 +129,13 @@ public class EmbeddedMongoDB {
      * @param port The port to check
      * @return True is port is in use, false otherwise
      */
-    private boolean inUse(String host, int port) {
+    private boolean inUse( int port) {
         boolean result = false;
 
-        try {
-            (new Socket(host, port)).close();
-            result = true;
+        try (ServerSocket serverSocket = new ServerSocket(port)){
+            result = serverSocket == null;
         } catch (IOException e) {
+            result = true;
             LOG.warn("Did not (re-)start EmbeddedMongoDB @ {}:{} - looks like port is already in use?!", this.host, this.port, e);
         }
 
