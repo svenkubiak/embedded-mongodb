@@ -28,6 +28,7 @@ public class EmbeddedMongoDBTest {
         // then
         assertTrue(embeddedMongoDB.isActive());
         embeddedMongoDB.stop();
+        assertFalse(embeddedMongoDB.isActive());
     }
     
     @Test
@@ -54,7 +55,7 @@ public class EmbeddedMongoDBTest {
         assertEquals(29019, embeddedMongoDB.getPort());
         assertEquals(Version.Main.PRODUCTION, embeddedMongoDB.getVersion());
         embeddedMongoDB.stop();
-
+        assertFalse(embeddedMongoDB.isActive());
     }
     
 	@Test
@@ -86,6 +87,6 @@ public class EmbeddedMongoDBTest {
 		// then
 		assertEquals(100, collection.countDocuments());
         embeddedMongoDB.stop();
-
+        assertFalse(embeddedMongoDB.isActive());
 	}
 }
