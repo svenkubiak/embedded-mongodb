@@ -154,18 +154,30 @@ public class EmbeddedMongoDB {
         }
     }
 
+    /**
+     * @return The configured hostname
+     */
     public String getHost() {
         return host;
     }
 
+    /**
+     * @return The mongod version in use
+     */
     public Version.Main getVersion() {
         return version;
     }
 
+    /**
+     * @return The configured port
+     */
     public int getPort() {
         return port;
     }
 
+    /**
+     * @return True if embedded database is up and running, false otherise
+     */
     public boolean isActive() {
         return active;
     }
