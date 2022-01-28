@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.svenkubiak</groupId>
 	<artifactId>embedded-mongodb</artifactId>
-	<version>6.0.2-SNAPSHOT</version>
+	<version>6.0.2</version>
 	<packaging>jar</packaging>
 	<licenses>
 		<license>
@@ -25,7 +25,7 @@
 		<connection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</connection>
 		<developerConnection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</developerConnection>
 		<url>git@github.com:svenkubiak/embedded-mongodb.git</url>
-		<tag>HEAD</tag>
+		<tag>6.0.2</tag>
 	</scm>
 	<name>Embedded MongoDB</name>
 	<description>Embedded MongoDB for unit testing purposes based on flapdoodle-oss/de.flapdoodle.embed.mongo</description>
