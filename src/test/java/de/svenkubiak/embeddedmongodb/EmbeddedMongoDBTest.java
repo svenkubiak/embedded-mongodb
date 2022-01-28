@@ -1,9 +1,14 @@
 package de.svenkubiak.embeddedmongodb;
 
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.concurrent.TimeUnit;
 
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
@@ -38,10 +43,9 @@ public class EmbeddedMongoDBTest {
         
         // when
         embeddedMongoDB.stop();
-        Thread.sleep(5000);
         
         // then
-        assertFalse(embeddedMongoDB.isActive());
+        await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> assertThat(embeddedMongoDB.isActive(), equalTo(false)));
     }
     
     @Test

@@ -1,6 +1,7 @@
 package de.svenkubiak.embeddedmongodb;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.Objects;
 
@@ -129,10 +130,10 @@ public class EmbeddedMongoDB {
      * @param port The port to check
      * @return True is port is in use, false otherwise
      */
-    private boolean inUse( int port) {
+    private boolean inUse(int port) {
         boolean result = false;
 
-        try (ServerSocket serverSocket = new ServerSocket(port)){
+        try (ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
             result = serverSocket == null;
         } catch (IOException e) {
             result = true;
