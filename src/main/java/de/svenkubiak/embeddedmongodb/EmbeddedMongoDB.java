@@ -99,7 +99,7 @@ public class EmbeddedMongoDB {
                     .output(Processors.logTo(LOG, Slf4jLevel.DEBUG))
                     .build();
                 
-                Command command = Command.MongoD;
+                var command = Command.MongoD;
                 RuntimeConfig runtimeConfig = Defaults.runtimeConfigFor(command)
                         .processOutput(processOutput)
                         .build();
@@ -131,9 +131,9 @@ public class EmbeddedMongoDB {
      * @return True is port is in use, false otherwise
      */
     private boolean inUse(int port) {
-        boolean result = false;
+        var result = false;
 
-        try (ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
+        try (var serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
             result = serverSocket == null;
         } catch (IOException e) {
             result = true;
