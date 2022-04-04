@@ -28,9 +28,9 @@ import de.flapdoodle.embed.process.io.Slf4jLevel;
  */
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
+    private Version.Main version = Version.Main.PRODUCTION;
     private MongodProcess mongodProcess;
     private String host = "localhost";
-    private Version.Main version = Version.Main.PRODUCTION;
     private int port = 29019;
     private boolean active;
     
@@ -88,6 +88,7 @@ public class EmbeddedMongoDB {
 
     /**
      * Starts the EmbeddedMongoDB instance
+     * 
      * @return EmbeddedMongoDB instance 
      */
     public EmbeddedMongoDB start() {
@@ -122,27 +123,6 @@ public class EmbeddedMongoDB {
         return this;
     }
     
-    
-    /**
-     * Checks if the given host and port is already in use
-     * 
-     * @param host The host to check
-     * @param port The port to check
-     * @return True is port is in use, false otherwise
-     */
-    private boolean inUse(int port) {
-        var result = false;
-
-        try (var serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
-            result = serverSocket == null;
-        } catch (IOException e) {
-            result = true;
-            LOG.warn("Did not (re-)start EmbeddedMongoDB @ {}:{} - looks like port is already in use?!", this.host, this.port, e);
-        }
-
-        return result;
-    }
-    
     /**
      * Stops the EmbeddedMongoDB instance
      */
@@ -156,7 +136,7 @@ public class EmbeddedMongoDB {
     }
 
     /**
-     * @return The configured hostname
+     * @return The configured host name
      */
     public String getHost() {
         return host;
@@ -177,9 +157,28 @@ public class EmbeddedMongoDB {
     }
 
     /**
-     * @return True if embedded database is up and running, false otherise
+     * @return True if embedded database is up and running, false otherwise
      */
     public boolean isActive() {
         return active;
+    }
+    
+    /**
+     * Checks if the given host and port is already in use
+     * 
+     * @param port The port to check
+     * @return True is port is in use, false otherwise
+     */
+    private boolean inUse(int port) {
+        var result = false;
+
+        try (var serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
+            result = serverSocket == null;
+        } catch (IOException e) {
+            result = true;
+            LOG.warn("Did not (re-)start EmbeddedMongoDB @ {}:{} - looks like port is already in use?!", this.host, this.port, e);
+        }
+
+        return result;
     }
 }
