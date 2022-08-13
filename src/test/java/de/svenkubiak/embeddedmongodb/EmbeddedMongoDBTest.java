@@ -32,7 +32,11 @@ public class EmbeddedMongoDBTest {
         
         // then
         assertTrue(embeddedMongoDB.isActive());
+        
+        // when
         embeddedMongoDB.stop();
+        
+        // then
         assertFalse(embeddedMongoDB.isActive());
     }
     
