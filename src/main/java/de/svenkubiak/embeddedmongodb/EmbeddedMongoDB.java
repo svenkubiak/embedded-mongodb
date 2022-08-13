@@ -96,8 +96,8 @@ public class EmbeddedMongoDB {
             try {
                 ImmutableProcessOutput processOutput = ProcessOutput.builder()
                     .error(Processors.logTo(LOG, Slf4jLevel.ERROR))
-                    .commands(Processors.logTo(LOG, Slf4jLevel.DEBUG))
-                    .output(Processors.logTo(LOG, Slf4jLevel.DEBUG))
+                    .commands(Processors.logTo(LOG, Slf4jLevel.INFO))
+                    .output(Processors.logTo(LOG, Slf4jLevel.INFO))
                     .build();
                 
                 var command = Command.MongoD;
