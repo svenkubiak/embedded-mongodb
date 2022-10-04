@@ -136,25 +136,25 @@
 				<version>3.0.1</version>
 			</plugin>
 			<plugin>
-					<groupId>org.owasp</groupId>
-					<artifactId>dependency-check-maven</artifactId>
-					<version>7.1.1</version>
-					<configuration>
-						<cveValidForHours>12</cveValidForHours>
-						<failBuildOnCVSS>1</failBuildOnCVSS>
-						<!--
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>7.1.1</version>
+				<configuration>
+					<cveValidForHours>12</cveValidForHours>
+					<failBuildOnCVSS>1</failBuildOnCVSS>
+					<!--
 						<suppressionFiles>
 							<suppressionFile>${maven.multiModuleProjectDirectory}/owasp-suppression.xml</suppressionFile>
 						</suppressionFiles>
 						-->
-						<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
-						<composerAnalyzerEnabled>false</composerAnalyzerEnabled>
-						<nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
-						<nuspecAnalyzerEnabled>false</nuspecAnalyzerEnabled>
-						<cocoapodsAnalyzerEnabled>false</cocoapodsAnalyzerEnabled>
-						<golangDepEnabled>false</golangDepEnabled>
-					</configuration>
-				</plugin>
+					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+					<composerAnalyzerEnabled>false</composerAnalyzerEnabled>
+					<nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
+					<nuspecAnalyzerEnabled>false</nuspecAnalyzerEnabled>
+					<cocoapodsAnalyzerEnabled>false</cocoapodsAnalyzerEnabled>
+					<golangDepEnabled>false</golangDepEnabled>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -236,7 +236,7 @@
 				<exclusion>
 					<groupId>de.flapdoodle.embed</groupId>
 					<artifactId>de.flapdoodle.embed.process</artifactId>
-				</exclusion>				
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -252,8 +252,8 @@
 					<groupId>de.flapdoodle</groupId>
 					<artifactId>de.flapdoodle.os</artifactId>
 				</exclusion>
-			</exclusions>			
-		</dependency>		
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>de.flapdoodle</groupId>
 			<artifactId>de.flapdoodle.os</artifactId>
