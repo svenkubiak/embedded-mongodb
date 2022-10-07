@@ -28,7 +28,7 @@ import de.flapdoodle.embed.process.io.Slf4jLevel;
  */
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
-    private Version.Main version = Version.Main.PRODUCTION;
+    private Version.Main version = Version.Main.V5_0;
     private MongodProcess mongodProcess;
     private String host = "localhost";
     private int port = 29019;
