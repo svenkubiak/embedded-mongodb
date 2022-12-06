@@ -69,9 +69,8 @@ public class EmbeddedMongoDB {
     /**
      * Sets the version for the EmbeddedMongoDB instance 
      * 
-     * Default is Version.Main.PRODUCTION
+     * Default is Version.Main.V6_0
      * 
-     * @param version The version to set
      * @return EmbeddedMongoDB instance 
      */
     public EmbeddedMongoDB enableIPv6() {
