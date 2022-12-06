@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.flapdoodle.checks.Preconditions;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.mongo.transitions.Mongod;
@@ -46,6 +47,8 @@ public class EmbeddedMongoDB {
      * @return EmbeddedMongoDB instance 
      */
     public EmbeddedMongoDB withPort(int port) {
+        Preconditions.checkArgument(port > 1024, "Port needs to be greater than 1024");
+        
         this.port = port;
         return this;
     }
@@ -67,9 +70,9 @@ public class EmbeddedMongoDB {
     }
     
     /**
-     * Sets the version for the EmbeddedMongoDB instance 
+     * Enable IPv6 for host configuration
      * 
-     * Default is Version.Main.V6_0
+     * Default is false
      * 
      * @return EmbeddedMongoDB instance 
      */
@@ -81,7 +84,7 @@ public class EmbeddedMongoDB {
     /**
      * Sets the version for the EmbeddedMongoDB instance 
      * 
-     * Default is Version.Main.PRODUCTION
+     * Default is Version.Main.V6_0
      * 
      * @param version The version to set
      * @return EmbeddedMongoDB instance 
