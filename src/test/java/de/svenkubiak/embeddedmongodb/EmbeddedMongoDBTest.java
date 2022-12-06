@@ -61,7 +61,7 @@ public class EmbeddedMongoDBTest {
         assertFalse(embeddedMongoDB.isActive());
         assertEquals("localhost", embeddedMongoDB.getHost());
         assertEquals(29019, embeddedMongoDB.getPort());
-        assertEquals(Version.Main.V5_0, embeddedMongoDB.getVersion());
+        assertEquals(Version.Main.V6_0, embeddedMongoDB.getVersion());
         embeddedMongoDB.stop();
         assertFalse(embeddedMongoDB.isActive());
     }

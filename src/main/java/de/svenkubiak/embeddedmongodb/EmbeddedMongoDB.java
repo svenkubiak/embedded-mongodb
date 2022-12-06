@@ -8,31 +8,25 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.flapdoodle.embed.mongo.MongodProcess;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.Defaults;
-import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.mongo.packageresolver.Command;
-import de.flapdoodle.embed.process.config.RuntimeConfig;
-import de.flapdoodle.embed.process.config.process.ImmutableProcessOutput;
-import de.flapdoodle.embed.process.config.process.ProcessOutput;
+import de.flapdoodle.embed.mongo.transitions.Mongod;
+import de.flapdoodle.embed.mongo.transitions.RunningMongodProcess;
+import de.flapdoodle.embed.process.io.ProcessOutput;
 import de.flapdoodle.embed.process.io.Processors;
 import de.flapdoodle.embed.process.io.Slf4jLevel;
+import de.flapdoodle.reverse.Transition;
+import de.flapdoodle.reverse.TransitionWalker;
+import de.flapdoodle.reverse.transitions.Start;
 
-/**
- * 
- * @author svenkubiak
- *
- */
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
-    private Version.Main version = Version.Main.V5_0;
-    private MongodProcess mongodProcess;
+    private TransitionWalker.ReachedState<RunningMongodProcess> mongodProcess;
+    private Version.Main version = Version.Main.V6_0;
     private String host = "localhost";
     private int port = 29019;
     private boolean active;
+    private boolean ipv6;
     
     /**
      * Creates a new EmbeddedMongoDB instance 
@@ -64,10 +58,24 @@ public class EmbeddedMongoDB {
      * @param host The host to set
      * @return EmbeddedMongoDB instance 
      */
+    
     public EmbeddedMongoDB withHost(String host) {
         Objects.requireNonNull(host, "host can not be null");
         
         this.host = host;
+        return this;
+    }
+    
+    /**
+     * Sets the version for the EmbeddedMongoDB instance 
+     * 
+     * Default is Version.Main.PRODUCTION
+     * 
+     * @param version The version to set
+     * @return EmbeddedMongoDB instance 
+     */
+    public EmbeddedMongoDB enableIPv6() {
+        this.ipv6 = true;
         return this;
     }
     
@@ -92,49 +100,48 @@ public class EmbeddedMongoDB {
      * @return EmbeddedMongoDB instance 
      */
     public EmbeddedMongoDB start() {
-        if (!this.active && !inUse(this.port)) {
-            try {
-                ImmutableProcessOutput processOutput = ProcessOutput.builder()
-                    .error(Processors.logTo(LOG, Slf4jLevel.ERROR))
-                    .commands(Processors.logTo(LOG, Slf4jLevel.INFO))
-                    .output(Processors.logTo(LOG, Slf4jLevel.INFO))
-                    .build();
-                
-                var command = Command.MongoD;
-                RuntimeConfig runtimeConfig = Defaults.runtimeConfigFor(command)
-                        .processOutput(processOutput)
-                        .build();
-                
-                this.mongodProcess = MongodStarter.getInstance(runtimeConfig).prepare(MongodConfig.builder()
-                        .version(this.version)
-                        .net(new Net(this.host, this.port, false))
-                        .build())
-                        .start();
+        if (!active && !inUse(port)) {
+            Mongod mongod = new Mongod() {
+                @Override
+                public Transition<Net> net() {
+                    return Start.to(Net.class).initializedWith(Net.of(host, port, ipv6));
+                }
 
-                this.active = true;
-                LOG.info("Successfully started EmbeddedMongoDB @ {}:{}", this.host, this.port);
-            } catch (final IOException e) {
-                LOG.error("Failed to start EmbeddedMongoDB @ {}:{}", this.host, this.port, e);
+                @Override
+                public Transition<ProcessOutput> processOutput() {
+                    return Start.to(ProcessOutput.class)
+                            .initializedWith(ProcessOutput.builder()
+                                    .output(Processors.logTo(LOG, Slf4jLevel.INFO))
+                                    .error(Processors.logTo(LOG, Slf4jLevel.ERROR))
+                                    .commands(Processors.logTo(LOG, Slf4jLevel.DEBUG))
+                                    .build());
+                }
+            };
+
+            try {
+                mongodProcess = mongod.start(version);
+                active = true;
+
+                LOG.info("Successfully started EmbeddedMongoDB @ {}:{}", host, port);
+            } catch (Exception e) {
+                LOG.error("Failed to start EmbeddedMongoDB @ {}:{}", host, port, e);
             }
         } else {
-            LOG.warn("Could not start EmbeddedMongoDB. Either already active or port in use");
+            LOG.error("Could not start EmbeddedMongoDB. Either already active or port in use");
         }
-        
         return this;
     }
-    
+
     /**
      * Stops the EmbeddedMongoDB instance
      */
     public void stop() {
         if (this.active) {
-            this.mongodProcess.stop();
-            this.active = false;
-
-            LOG.info("Successfully stopped EmbeddedMongoDB @ {}:{}", this.host, this.port);
+            mongodProcess.close();
+            active = false;
         }
     }
-
+    
     /**
      * @return The configured host name
      */
@@ -164,12 +171,19 @@ public class EmbeddedMongoDB {
     }
     
     /**
+     * @return True if IPv6 is enabled, false otherwise
+     */
+    public boolean isIPv6() {
+        return active;
+    }
+    
+    /**
      * Checks if the given host and port is already in use
      * 
      * @param port The port to check
      * @return True is port is in use, false otherwise
      */
-    private boolean inUse(int port) {
+    private boolean inUse (int port) {
         var result = false;
 
         try (var serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
