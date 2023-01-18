@@ -37,6 +37,17 @@ public class EmbeddedMongoDB {
     public static EmbeddedMongoDB create() {
         return new EmbeddedMongoDB();
     }
+    
+    /**
+     * Creates a new EmbeddedMongoDB instance with a given host and port
+     * 
+     * @param host The host to set
+     * @param port The port to set
+     * @return
+     */
+    public static EmbeddedMongoDB create(String host, int port) {
+        return new EmbeddedMongoDB().withHost(host).withPort(port);
+    }
 
     /**
      * Sets the port for the EmbeddedMongoDB instance 
