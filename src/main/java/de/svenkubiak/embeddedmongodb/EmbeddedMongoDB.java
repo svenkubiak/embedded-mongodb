@@ -20,6 +20,12 @@ import de.flapdoodle.reverse.Transition;
 import de.flapdoodle.reverse.TransitionWalker;
 import de.flapdoodle.reverse.transitions.Start;
 
+/**
+ * Convenient class for handling an EmbeddedMongoDB instance
+ * 
+ * @author svenkubiak
+ *
+ */
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
     private TransitionWalker.ReachedState<RunningMongodProcess> mongodProcess;
@@ -43,7 +49,7 @@ public class EmbeddedMongoDB {
      * 
      * @param host The host to set
      * @param port The port to set
-     * @return
+     * @return EmbeddedMongoDB instance
      */
     public static EmbeddedMongoDB create(String host, int port) {
         return new EmbeddedMongoDB().withHost(host).withPort(port);

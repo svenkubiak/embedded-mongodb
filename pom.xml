@@ -20,6 +20,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
+		<maven.compiler.optimze>true</maven.compiler.optimze>
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</connection>
@@ -57,7 +58,6 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<debug>false</debug>
-					<optimize>true</optimize>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -219,7 +219,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>4.5.1</version>
+			<version>4.6.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
