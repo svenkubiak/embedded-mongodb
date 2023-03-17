@@ -140,6 +140,7 @@ public class EmbeddedMongoDB {
             try {
                 mongodProcess = mongod.start(version);
                 active = true;
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> stop()));
 
                 LOG.info("Successfully started EmbeddedMongoDB @ {}:{}", host, port);
             } catch (Exception e) {
@@ -148,6 +149,7 @@ public class EmbeddedMongoDB {
         } else {
             LOG.error("Could not start EmbeddedMongoDB. Either already active or port in use");
         }
+        
         return this;
     }
 
@@ -155,9 +157,10 @@ public class EmbeddedMongoDB {
      * Stops the EmbeddedMongoDB instance
      */
     public void stop() {
-        if (this.active) {
+        if (active) {
             mongodProcess.close();
             active = false;
+            LOG.info("Closed EmbeddedMongoDB @ {}:{}", host, port);
         }
     }
     
@@ -193,7 +196,7 @@ public class EmbeddedMongoDB {
      * @return True if IPv6 is enabled, false otherwise
      */
     public boolean isIPv6() {
-        return active;
+        return ipv6;
     }
     
     /**
@@ -209,7 +212,7 @@ public class EmbeddedMongoDB {
             result = serverSocket == null;
         } catch (IOException e) {
             result = true;
-            LOG.warn("Did not (re-)start EmbeddedMongoDB @ {}:{} - looks like port is already in use?!", this.host, this.port, e);
+            LOG.warn("Did not (re-)start EmbeddedMongoDB @ {}:{} - looks like port at host is already in use?!", host, port, e);
         }
 
         return result;
