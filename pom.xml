@@ -108,7 +108,7 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>8.3.1</version>
+				<version>8.4.0</version>
 				<configuration>
 					<cveValidForHours>12</cveValidForHours>
 					<failBuildOnCVSS>1</failBuildOnCVSS>
@@ -200,7 +200,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>4.8.0</version>
+			<version>4.9.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
