@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.svenkubiak</groupId>
 	<artifactId>embedded-mongodb</artifactId>
@@ -24,12 +26,14 @@
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</connection>
-		<developerConnection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</developerConnection>
+		<developerConnection>
+			scm:git:git@github.com:svenkubiak/embedded-mongodb.git</developerConnection>
 		<url>git@github.com:svenkubiak/embedded-mongodb.git</url>
 		<tag>HEAD</tag>
 	</scm>
 	<name>Embedded MongoDB</name>
-	<description>Embedded MongoDB for unit testing purposes based on flapdoodle-oss/de.flapdoodle.embed.mongo</description>
+	<description>Embedded MongoDB for unit testing purposes based on
+		flapdoodle-oss/de.flapdoodle.embed.mongo</description>
 	<url>https://github.com/svenkubiak/embedded-mongodb</url>
 	<build>
 		<resources>
@@ -89,6 +93,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.1.2</version>
+				<configuration>
+					<systemPropertyVariables>
+						<de.flapdoodle.os.override>
+							Linux|X86_64|Ubuntu|Ubuntu_22_04</de.flapdoodle.os.override>
+					</systemPropertyVariables>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -114,7 +124,7 @@
 					<failBuildOnCVSS>1</failBuildOnCVSS>
 					<!--
 						<suppressionFiles>
-							<suppressionFile>${maven.multiModuleProjectDirectory}/owasp-suppression.xml</suppressionFile>
+					<suppressionFile>${maven.multiModuleProjectDirectory}/owasp-suppression.xml</suppressionFile>
 						</suppressionFiles>
 						-->
 					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
