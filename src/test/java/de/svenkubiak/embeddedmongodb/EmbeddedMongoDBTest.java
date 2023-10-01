@@ -24,9 +24,9 @@ import de.flapdoodle.embed.mongo.distribution.Version;
  * @author svenkubiak
  *
  */
-public class EmbeddedMongoDBTest {
+class EmbeddedMongoDBTest {
     @Test
-    public void testStart() {
+    void testStart() {
         // given
         EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
         
@@ -41,7 +41,7 @@ public class EmbeddedMongoDBTest {
     }
     
     @Test
-    public void testStop() throws InterruptedException {
+    void testStop() throws InterruptedException {
         // given
         EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
         
@@ -53,7 +53,7 @@ public class EmbeddedMongoDBTest {
     }
     
     @Test
-    public void testDefaultValues() {
+    void testDefaultValues() {
         // given
         EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create();
         
@@ -67,7 +67,7 @@ public class EmbeddedMongoDBTest {
     }
     
 	@Test
-	public void testMongoDB() {
+	void testMongoDB() {
 	    // given
 	    EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
 	    MongoClient mongoClient = new MongoClient(embeddedMongoDB.getHost(), embeddedMongoDB.getPort());

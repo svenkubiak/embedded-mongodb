@@ -140,7 +140,7 @@ public class EmbeddedMongoDB {
             try {
                 mongodProcess = mongod.start(version);
                 active = true;
-                Runtime.getRuntime().addShutdownHook(new Thread(() -> stop()));
+                Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 
                 LOG.info("Successfully started EmbeddedMongoDB @ {}:{}", host, port);
             } catch (Exception e) {
