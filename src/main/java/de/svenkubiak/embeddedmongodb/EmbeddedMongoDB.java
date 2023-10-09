@@ -29,7 +29,7 @@ import de.flapdoodle.reverse.transitions.Start;
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
     private TransitionWalker.ReachedState<RunningMongodProcess> mongodProcess;
-    private Version.Main version = Version.Main.V6_0;
+    private Version.Main version = Version.Main.V7_0;
     private String host = "localhost";
     private int port = 29019;
     private boolean active;
@@ -205,7 +205,7 @@ public class EmbeddedMongoDB {
      * @param port The port to check
      * @return True is port is in use, false otherwise
      */
-    private boolean inUse (int port) {
+    private boolean inUse(int port) {
         var result = false;
 
         try (var serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
