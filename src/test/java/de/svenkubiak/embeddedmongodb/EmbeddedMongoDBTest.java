@@ -18,6 +18,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.mongo.distribution.Version.Main;
 
 /**
  * 
@@ -64,6 +65,65 @@ class EmbeddedMongoDBTest {
         assertEquals(Version.Main.V7_0, embeddedMongoDB.getVersion());
         embeddedMongoDB.stop();
         assertFalse(embeddedMongoDB.isActive());
+    }
+    
+    @Test
+    void testCreateWithHostAndPort() {
+        // given
+        String host = "myhost";
+        int port = 30131;
+        
+        //when
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create(host, port);
+        
+        // then
+        assertEquals(host, embeddedMongoDB.getHost());
+        assertEquals(port, embeddedMongoDB.getPort());
+    }
+    
+    @Test
+    void testCreateWithPort() {
+        // given
+        int port = 30131;
+        
+        //when
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().withPort(port);
+        
+        // then
+        assertEquals(port, embeddedMongoDB.getPort());
+    }
+    
+    @Test
+    void testCreateWithHost() {
+        // given
+        String host = "myhost";
+        
+        //when
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().withHost(host);
+        
+        // then
+        assertEquals(host, embeddedMongoDB.getHost());
+    }
+    
+    @Test
+    void testCreateWithIPv6Enabled() {
+        //when
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().enableIPv6();
+        
+        // then
+        assertEquals(true, embeddedMongoDB.isIPv6());
+    }
+    
+    @Test
+    void testCreateWithVersion() {
+        //given
+        Main version = Main.V6_0;
+        
+        //when
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().withVersion(version);
+        
+        // then
+        assertEquals(version, embeddedMongoDB.getVersion());
     }
     
 	@Test
