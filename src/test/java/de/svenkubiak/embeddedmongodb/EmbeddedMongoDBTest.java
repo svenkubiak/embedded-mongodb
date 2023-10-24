@@ -112,7 +112,7 @@ class EmbeddedMongoDBTest {
         EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().enableIPv6();
         
         // then
-        assertEquals(true, embeddedMongoDB.isIPv6());
+        assertEquals(Boolean.TRUE, embeddedMongoDB.isIPv6());
     }
     
     @Test
