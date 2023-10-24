@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.concurrent.TimeUnit;
@@ -124,6 +125,20 @@ class EmbeddedMongoDBTest {
         
         // then
         assertEquals(version, embeddedMongoDB.getVersion());
+    }
+    
+    @Test
+    void testInvalidPort() {
+        //given
+        String expectedMessage = "Port needs to be greater than 1024";
+        int port = 555;
+        
+        //when
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            EmbeddedMongoDB.create().withPort(port);
+        });
+
+        assertTrue(exception.getMessage().contains(expectedMessage));
     }
     
 	@Test
