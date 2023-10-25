@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 import org.bson.Document;
@@ -26,11 +28,26 @@ import de.flapdoodle.embed.mongo.distribution.Version.Main;
  * @author svenkubiak
  *
  */
-class EmbeddedMongoDBTest {
+class EmbeddedMongoDBTests {
     @Test
     void testStart() {
         // given
         EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+        
+        // then
+        assertTrue(embeddedMongoDB.isActive());
+        
+        // when
+        embeddedMongoDB.stop();
+        
+        // then
+        assertFalse(embeddedMongoDB.isActive());
+    }
+    
+    @Test
+    void testCreateStart() {
+        // given
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.createAndStart();
         
         // then
         assertTrue(embeddedMongoDB.isActive());
@@ -172,4 +189,32 @@ class EmbeddedMongoDBTest {
         embeddedMongoDB.stop();
         assertFalse(embeddedMongoDB.isActive());
 	}
+	
+	@Test
+    void testInUse() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        // given
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+
+        // when
+        Method privateMethod = embeddedMongoDB.getClass().getDeclaredMethod("inUse", int.class);
+        privateMethod.setAccessible(true);
+        boolean inUse = (boolean) privateMethod.invoke(embeddedMongoDB, 29019);
+        
+        // then
+        assertTrue(inUse);
+        embeddedMongoDB.stop();
+        assertFalse(embeddedMongoDB.isActive());
+    }
+	
+    @Test
+    void testDoubleStart() {
+        // given
+        EmbeddedMongoDB embeddedMongoDB1 = EmbeddedMongoDB.create().start();
+        EmbeddedMongoDB embeddedMongoDB2 = EmbeddedMongoDB.create().start();
+       
+        // then
+        assertTrue(embeddedMongoDB1.isActive());
+        assertFalse(embeddedMongoDB2.isActive());
+        embeddedMongoDB1.stop();
+    }
 }

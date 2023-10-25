@@ -36,12 +36,25 @@ public class EmbeddedMongoDB {
     private boolean ipv6;
     
     /**
-     * Creates a new EmbeddedMongoDB instance 
+     * Creates a new EmbeddedMongoDB instance with default values
+     * Host: localhost
+     * Port: 29019
      * 
      * @return EmbeddedMongoDB instance 
      */
     public static EmbeddedMongoDB create() {
         return new EmbeddedMongoDB();
+    }
+    
+    /**
+     * Creates and starts a new EmbeddedMongoDB instance with default values
+     * Host: localhost
+     * Port: 29019
+     * 
+     * @return EmbeddedMongoDB instance 
+     */
+    public static EmbeddedMongoDB createAndStart() {
+        return new EmbeddedMongoDB().start();
     }
     
     /**
@@ -147,7 +160,7 @@ public class EmbeddedMongoDB {
                 LOG.error("Failed to start EmbeddedMongoDB @ {}:{}", host, port, e);
             }
         } else {
-            LOG.error("Could not start EmbeddedMongoDB. Either already active or port in use");
+            LOG.error("Could not start EmbeddedMongoDB. Either already active or port '{}' in use", port);
         }
         
         return this;
@@ -186,7 +199,7 @@ public class EmbeddedMongoDB {
     }
 
     /**
-     * @return True if embedded database is up and running, false otherwise
+     * @return True if up and running, false otherwise
      */
     public boolean isActive() {
         return active;
@@ -208,7 +221,7 @@ public class EmbeddedMongoDB {
     private boolean inUse(int port) {
         var result = false;
 
-        try (var serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))){
+        try (var serverSocket = new ServerSocket(port, 0, InetAddress.getByName(host))) { //NOSONAR
             result = serverSocket == null;
         } catch (IOException e) {
             result = true;
