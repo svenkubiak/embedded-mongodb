@@ -197,7 +197,7 @@ class EmbeddedMongoDBTests {
 
         // when
         Method privateMethod = embeddedMongoDB.getClass().getDeclaredMethod("inUse", int.class);
-        privateMethod.setAccessible(true);
+        privateMethod.setAccessible(true); //NOSONAR
         boolean inUse = (boolean) privateMethod.invoke(embeddedMongoDB, 29019);
         
         // then
