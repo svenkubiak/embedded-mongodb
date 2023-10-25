@@ -14,5 +14,3 @@ else
 fi
 
 rm pom.xml.versionsBackup
-
-
