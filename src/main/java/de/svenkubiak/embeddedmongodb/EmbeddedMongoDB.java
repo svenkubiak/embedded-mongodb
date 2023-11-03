@@ -70,7 +70,7 @@ public class EmbeddedMongoDB {
 
     /**
      * Sets the port for the EmbeddedMongoDB instance 
-     * 
+     * <p>
      * Default is 29019
      * 
      * @param port The port to set
@@ -85,7 +85,7 @@ public class EmbeddedMongoDB {
 
     /**
      * Sets the host for the EmbeddedMongoDB instance 
-     * 
+     * <p>
      * Default is localhost
      * 
      * @param host The host to set
@@ -101,7 +101,7 @@ public class EmbeddedMongoDB {
     
     /**
      * Enable IPv6 for host configuration
-     * 
+     * <p>
      * Default is false
      * 
      * @return EmbeddedMongoDB instance 
@@ -113,7 +113,7 @@ public class EmbeddedMongoDB {
     
     /**
      * Sets the version for the EmbeddedMongoDB instance 
-     * 
+     * <p>
      * Default is Version.Main.V6_0
      * 
      * @param version The version to set
