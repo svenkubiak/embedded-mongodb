@@ -1,6 +1,8 @@
 #!/bin/bash
 mvn versions:set
 STATUS=$?
+VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+
 if [ $STATUS -ne 0 ]; then
   echo "Failed to set new version!"
 else
@@ -9,7 +11,10 @@ else
   if [ $STATUS -ne 0 ]; then
     echo "Failed to release!"  
   else
+    git tag $VERSION
     mvn release:update-versions
+    git commit -am "Updated version after release"
+    git push origin main
   fi
 fi
 
