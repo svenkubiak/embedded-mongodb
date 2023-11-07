@@ -9,6 +9,7 @@ else
   if [ $STATUS -ne 0 ]; then
     echo "Failed to release!"  
   else
+    git tag $STATUS
     mvn release:update-versions
   fi
 fi
