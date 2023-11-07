@@ -11,6 +11,8 @@ else
   else
     git tag $STATUS
     mvn release:update-versions
+    git commit -m "Updated version after release"
+    git push origin main
   fi
 fi
 
