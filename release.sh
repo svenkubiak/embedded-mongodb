@@ -1,4 +1,5 @@
 #!/bin/bash
+mvn clean verify
 mvn versions:set
 STATUS=$?
 VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
