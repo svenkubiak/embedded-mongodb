@@ -90,7 +90,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>3.2.3</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -110,7 +110,7 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>9.0.1</version>
+				<version>9.0.5</version>
 				<configuration>
 					<failBuildOnCVSS>1</failBuildOnCVSS>
 					<!--
@@ -124,6 +124,7 @@
 					<nuspecAnalyzerEnabled>false</nuspecAnalyzerEnabled>
 					<cocoapodsAnalyzerEnabled>false</cocoapodsAnalyzerEnabled>
 					<golangDepEnabled>false</golangDepEnabled>
+					<nvdApiKey>${nvd-key}</nvdApiKey>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -201,7 +202,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>4.11.1</version>
+			<version>4.12.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
