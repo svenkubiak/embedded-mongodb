@@ -1,6 +1,9 @@
 package de.svenkubiak.embeddedmongodb;
 
 import static org.awaitility.Awaitility.await;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static org.bson.codecs.pojo.Conventions.ANNOTATION_CONVENTION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,12 +14,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import org.bson.Document;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.junit.jupiter.api.Test;
 
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -162,8 +170,20 @@ class EmbeddedMongoDBTests {
 	void testMongoDB() {
 	    // given
 	    EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
-	    MongoClient mongoClient = new MongoClient(embeddedMongoDB.getHost(), embeddedMongoDB.getPort());
-		
+
+        var codecRegistry = MongoClientSettings.getDefaultCodecRegistry();
+        var pojoCodecProvider = PojoCodecProvider.builder()
+                .conventions(List.of(ANNOTATION_CONVENTION))
+                .automatic(true)
+                .build();
+
+        var settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString("mongodb://" + embeddedMongoDB.getHost() + ":" + embeddedMongoDB.getPort()))
+                .codecRegistry(fromRegistries(codecRegistry, fromProviders(pojoCodecProvider)))
+                .build();
+
+        MongoClient mongoClient = MongoClients.create(settings);
+
 	    // then
 	    assertNotNull(mongoClient);
 		
