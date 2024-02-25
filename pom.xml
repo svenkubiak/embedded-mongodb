@@ -125,10 +125,10 @@
 				<configuration>
 					<failBuildOnCVSS>1</failBuildOnCVSS>
 					<!--
-						<suppressionFiles>
-					<suppressionFile>${maven.multiModuleProjectDirectory}/owasp-suppression.xml</suppressionFile>
-						</suppressionFiles>
-						-->
+					<suppressionFiles>
+						<suppressionFile>${maven.multiModuleProjectDirectory}/owasp-suppression.xml</suppressionFile>
+					</suppressionFiles>
+					-->
 					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
 					<composerAnalyzerEnabled>false</composerAnalyzerEnabled>
 					<nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
@@ -219,7 +219,16 @@
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-compress</artifactId>
+				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.26.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
