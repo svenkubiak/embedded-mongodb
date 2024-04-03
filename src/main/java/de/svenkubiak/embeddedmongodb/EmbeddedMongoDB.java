@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.Objects;
 
+import de.flapdoodle.embed.mongo.commands.MongodArguments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,12 +142,13 @@ public class EmbeddedMongoDB {
 
                 @Override
                 public Transition<ProcessOutput> processOutput() {
-                    return Start.to(ProcessOutput.class)
-                            .initializedWith(ProcessOutput.builder()
-                                    .output(Processors.logTo(LOG, Slf4jLevel.INFO))
-                                    .error(Processors.logTo(LOG, Slf4jLevel.ERROR))
-                                    .commands(Processors.logTo(LOG, Slf4jLevel.DEBUG))
-                                    .build());
+                    return Start.to(ProcessOutput.class).initializedWith(ProcessOutput.silent());
+                }
+
+                @Override
+                public Transition<MongodArguments> mongodArguments() {
+                    return Start.to(MongodArguments.class)
+                            .initializedWith(MongodArguments.defaults().withIsQuiet(true));
                 }
             };
 
