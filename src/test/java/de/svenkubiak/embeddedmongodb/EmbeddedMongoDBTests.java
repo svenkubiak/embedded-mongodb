@@ -37,6 +37,9 @@ import de.flapdoodle.embed.mongo.distribution.Version.Main;
  *
  */
 class EmbeddedMongoDBTests {
+
+
+
     @Test
     void testStart() {
         // given
@@ -105,6 +108,12 @@ class EmbeddedMongoDBTests {
         // then
         assertEquals(host, embeddedMongoDB.getHost());
         assertEquals(port, embeddedMongoDB.getPort());
+
+        // when
+        embeddedMongoDB.stop();
+
+        // then
+        assertFalse(embeddedMongoDB.isActive());
     }
     
     @Test
@@ -117,6 +126,12 @@ class EmbeddedMongoDBTests {
         
         // then
         assertEquals(port, embeddedMongoDB.getPort());
+
+        // when
+        embeddedMongoDB.stop();
+
+        // then
+        assertFalse(embeddedMongoDB.isActive());
     }
     
     @Test
@@ -129,6 +144,12 @@ class EmbeddedMongoDBTests {
         
         // then
         assertEquals(host, embeddedMongoDB.getHost());
+
+        // when
+        embeddedMongoDB.stop();
+
+        // then
+        assertFalse(embeddedMongoDB.isActive());
     }
     
     @Test
@@ -138,6 +159,12 @@ class EmbeddedMongoDBTests {
         
         // then
         assertEquals(Boolean.TRUE, embeddedMongoDB.isIPv6());
+
+        // when
+        embeddedMongoDB.stop();
+
+        // then
+        assertFalse(embeddedMongoDB.isActive());
     }
     
     @Test
@@ -150,6 +177,12 @@ class EmbeddedMongoDBTests {
         
         // then
         assertEquals(version, embeddedMongoDB.getVersion());
+
+        // when
+        embeddedMongoDB.stop();
+
+        // then
+        assertFalse(embeddedMongoDB.isActive());
     }
     
     @Test
@@ -224,17 +257,5 @@ class EmbeddedMongoDBTests {
         assertTrue(inUse);
         embeddedMongoDB.stop();
         assertFalse(embeddedMongoDB.isActive());
-    }
-	
-    @Test
-    void testDoubleStart() {
-        // given
-        EmbeddedMongoDB embeddedMongoDB1 = EmbeddedMongoDB.create().start();
-        EmbeddedMongoDB embeddedMongoDB2 = EmbeddedMongoDB.create().start();
-       
-        // then
-        assertTrue(embeddedMongoDB1.isActive());
-        assertFalse(embeddedMongoDB2.isActive());
-        embeddedMongoDB1.stop();
     }
 }

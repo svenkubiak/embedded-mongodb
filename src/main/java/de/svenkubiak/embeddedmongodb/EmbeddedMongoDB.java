@@ -227,7 +227,7 @@ public class EmbeddedMongoDB {
             result = serverSocket == null;
         } catch (IOException e) {
             result = true;
-            LOG.warn("Did not (re-)start EmbeddedMongoDB @ {}:{} - looks like port at host is already in use?!", host, port, e);
+            LOG.warn("Port ist not available for starting EmbeddedMongoDB @ {}:{}", host, port, e);
         }
 
         return result;
