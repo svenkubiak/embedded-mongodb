@@ -121,7 +121,7 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>9.1.0</version>
+				<version>9.2.0</version>
 				<configuration>
 					<failBuildOnCVSS>1</failBuildOnCVSS>
 					<!--
@@ -213,7 +213,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>4.12.2</version>
+			<version>4.13.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -243,7 +243,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.11.0-M1</version>
+			<version>5.11.0-M2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

@@ -31,14 +31,7 @@ import com.mongodb.client.MongoDatabase;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
 
-/**
- * 
- * @author svenkubiak
- *
- */
 class EmbeddedMongoDBTests {
-
-
 
     @Test
     void testStart() {
