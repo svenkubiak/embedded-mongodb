@@ -142,7 +142,8 @@ public class EmbeddedMongoDB {
 
                 @Override
                 public Transition<ProcessOutput> processOutput() {
-                    return Start.to(ProcessOutput.class).initializedWith(ProcessOutput.silent());
+                    return Start.to(ProcessOutput.class)
+                            .initializedWith(ProcessOutput.silent());
                 }
 
                 @Override
