@@ -213,7 +213,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<version>4.12.2</version>
+			<version>4.13.1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -343,8 +343,7 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<systemPropertyVariables>
-								<de.flapdoodle.os.explain>true</de.flapdoodle.os.explain>
-								<!-- <de.flapdoodle.os.override>Linux|ARM_64|Ubuntu|Ubuntu_22_04</de.flapdoodle.os.override> -->
+								<de.flapdoodle.os.override>Linux|ARM_64|Ubuntu|Ubuntu_22_04</de.flapdoodle.os.override>
 							</systemPropertyVariables>
 						</configuration>
 					</plugin>
