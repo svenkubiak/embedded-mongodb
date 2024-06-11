@@ -15,8 +15,6 @@ import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.mongo.transitions.Mongod;
 import de.flapdoodle.embed.mongo.transitions.RunningMongodProcess;
 import de.flapdoodle.embed.process.io.ProcessOutput;
-import de.flapdoodle.embed.process.io.Processors;
-import de.flapdoodle.embed.process.io.Slf4jLevel;
 import de.flapdoodle.reverse.Transition;
 import de.flapdoodle.reverse.TransitionWalker;
 import de.flapdoodle.reverse.transitions.Start;
@@ -29,7 +27,7 @@ import de.flapdoodle.reverse.transitions.Start;
  */
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
-    private TransitionWalker.ReachedState<RunningMongodProcess> mongodProcess;
+    private TransitionWalker.ReachedState<RunningMongodProcess> runningMongodProcess;
     private Version.Main version = Version.Main.V7_0;
     private String host = "localhost";
     private int port = 29019;
@@ -154,7 +152,7 @@ public class EmbeddedMongoDB {
             };
 
             try {
-                mongodProcess = mongod.start(version);
+                runningMongodProcess = mongod.start(version);
                 active = true;
                 Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 
@@ -174,7 +172,7 @@ public class EmbeddedMongoDB {
      */
     public void stop() {
         if (active) {
-            mongodProcess.close();
+            runningMongodProcess.close();
             active = false;
             LOG.info("Closed EmbeddedMongoDB @ {}:{}", host, port);
         }
