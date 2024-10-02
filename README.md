@@ -1,4 +1,5 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.svenkubiak/embedded-mongodb/badge.svg)](https://mvnrepository.com/artifact/de.svenkubiak/embedded-mongodb)
+[![Coverage](https://sonar.svenkubiak.de/badges/embedded-mongodb)](https://sonar.svenkubiak.de/badges/embedded-mongodb)
 
 embedded-mongodb
 ================
