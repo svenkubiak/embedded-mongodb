@@ -47,6 +47,21 @@ class EmbeddedMongoDBTests {
         // then
         assertFalse(embeddedMongoDB.isActive());
     }
+
+    @Test
+    void testExistingStart() {
+        // given
+        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+
+        // then
+        assertTrue(embeddedMongoDB.isActive());
+
+        // when
+        embeddedMongoDB.start();
+
+        // then
+        assertTrue(embeddedMongoDB.isActive());
+    }
     
     @Test
     void testCreateStart() {
