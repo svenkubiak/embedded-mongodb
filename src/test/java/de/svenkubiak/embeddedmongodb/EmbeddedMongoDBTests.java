@@ -79,7 +79,7 @@ class EmbeddedMongoDBTests {
     }
     
     @Test
-    void testStop() throws InterruptedException {
+    void testStop() {
         // given
         EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
         
