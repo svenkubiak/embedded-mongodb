@@ -124,11 +124,9 @@
 				<version>11.0.0</version>
 				<configuration>
 					<failBuildOnCVSS>1</failBuildOnCVSS>
-					<!--
 					<suppressionFiles>
 						<suppressionFile>owasp-suppression.xml</suppressionFile>
 					</suppressionFiles>
-					-->
 					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
 					<composerAnalyzerEnabled>false</composerAnalyzerEnabled>
 					<nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
