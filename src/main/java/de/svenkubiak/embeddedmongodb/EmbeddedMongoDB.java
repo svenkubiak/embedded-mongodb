@@ -1,15 +1,7 @@
 package de.svenkubiak.embeddedmongodb;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.util.Objects;
-
-import de.flapdoodle.embed.mongo.commands.MongodArguments;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.flapdoodle.checks.Preconditions;
+import de.flapdoodle.embed.mongo.commands.MongodArguments;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.mongo.transitions.Mongod;
@@ -18,6 +10,13 @@ import de.flapdoodle.embed.process.io.ProcessOutput;
 import de.flapdoodle.reverse.Transition;
 import de.flapdoodle.reverse.TransitionWalker;
 import de.flapdoodle.reverse.transitions.Start;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.util.Objects;
 
 /**
  * Convenient class for handling an EmbeddedMongoDB instance
@@ -76,8 +75,8 @@ public class EmbeddedMongoDB {
      * @return EmbeddedMongoDB instance 
      */
     public EmbeddedMongoDB withPort(int port) {
-        Preconditions.checkArgument(port > 1024, "Port needs to be greater than 1024");
-        
+        Preconditions.checkArgument(port >= 1024 && port <= 65535, "Port needs to be between 1024 and 65535");
+
         this.port = port;
         return this;
     }
