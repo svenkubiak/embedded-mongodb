@@ -220,7 +220,7 @@
 			<plugin>
 				<groupId>org.pitest</groupId>
 				<artifactId>pitest-maven</artifactId>
-				<version>1.17.2</version>
+				<version>1.17.3</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.pitest</groupId>
@@ -256,7 +256,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.11.3</version>
+			<version>5.11.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
