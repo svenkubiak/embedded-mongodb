@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>21</jdk.version>
 		<maven.compiler.optimze>true</maven.compiler.optimze>
-		<slf4j.version>2.0.16</slf4j.version>
+		<slf4j.version>2.0.17</slf4j.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:svenkubiak/embedded-mongodb.git</connection>
@@ -225,7 +225,7 @@
 					<dependency>
 						<groupId>org.pitest</groupId>
 						<artifactId>pitest-junit5-plugin</artifactId>
-						<version>1.2.1</version>
+						<version>1.2.2</version>
 					</dependency>
 				</dependencies>
 			</plugin>
