@@ -19,7 +19,7 @@
 	</developers>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>21</jdk.version>
+		<jdk.version>25</jdk.version>
 		<maven.compiler.optimze>true</maven.compiler.optimze>
 		<slf4j.version>2.0.17</slf4j.version>
 	</properties>
@@ -94,19 +94,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>3.1.4</version>
-			</plugin>
-			<plugin>
-				<groupId>org.cyclonedx</groupId>
-				<artifactId>cyclonedx-maven-plugin</artifactId>
-				<version>2.9.1</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>makeAggregateBom</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
