@@ -6,7 +6,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
 import org.bson.Document;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -93,7 +92,7 @@ class EmbeddedMongoDBTests {
         assertThat(embeddedMongoDB.isActive()).isFalse();
         assertThat(embeddedMongoDB.getHost()).isEqualTo("localhost");
         assertThat(embeddedMongoDB.getPort()).isEqualTo(29019);
-        assertThat(embeddedMongoDB.getVersion()).isEqualTo(Version.Main.V7_0);
+        assertThat(embeddedMongoDB.getVersion()).isEqualTo(Main.V8_1);
         embeddedMongoDB.stop();
         assertThat(embeddedMongoDB.isActive()).isFalse();
     }
@@ -206,7 +205,7 @@ class EmbeddedMongoDBTests {
     @Test
     void testCreateWithVersion() {
         //given
-        Main version = Main.V6_0;
+        Main version = Main.V8_1;
         
         // when
         EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().withVersion(version);
