@@ -178,6 +178,8 @@ public class EmbeddedMongoDB {
     }
     
     /**
+     * Returns the configured host name
+     *
      * @return The configured host name
      */
     public String getHost() {
@@ -185,6 +187,8 @@ public class EmbeddedMongoDB {
     }
 
     /**
+     * Returns the mongod version in use
+     *
      * @return The mongod version in use
      */
     public Version.Main getVersion() {
@@ -192,6 +196,8 @@ public class EmbeddedMongoDB {
     }
 
     /**
+     * Returns the configured port
+     *
      * @return The configured port
      */
     public int getPort() {
@@ -199,6 +205,8 @@ public class EmbeddedMongoDB {
     }
 
     /**
+     * True if up and running, false otherwise
+     *
      * @return True if up and running, false otherwise
      */
     public boolean isActive() {
@@ -206,6 +214,8 @@ public class EmbeddedMongoDB {
     }
     
     /**
+     * True if IPv6 is enabled, false otherwise
+     *
      * @return True if IPv6 is enabled, false otherwise
      */
     public boolean isIPv6() {
