@@ -5,11 +5,13 @@
 embedded-mongodb
 ================
 
-Embedded MongoDB for unit testing and developement purposes. Based on [flapdoodle-oss/de.flapdoodle.embed.mongo][1]
+Embedded MongoDB for unit testing and development purposes. Based on [flapdoodle-oss/de.flapdoodle.embed.mongo][1]
 
 7.x requires Java 17.
 
 8.x requires Java 21.
+
+9.x requires Java 21.
 
 Usage
 ------------------
