@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.svenkubiak/embedded-mongodb/badge.svg)](https://mvnrepository.com/artifact/de.svenkubiak/embedded-mongodb)
+[![Maven Central](https://img.shields.io/maven-central/v/de.svenkubiak/embedded-mongodb)](https://mvnrepository.com/artifact/de.svenkubiak/embedded-mongodb)
 [![Coverage](https://sonar.svenkubiak.de/badges/embedded-mongodb)](https://sonar.svenkubiak.de/badges/embedded-mongodb)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%8D%BA-yellow)](https://buymeacoffee.com/svenkubiak)
 
