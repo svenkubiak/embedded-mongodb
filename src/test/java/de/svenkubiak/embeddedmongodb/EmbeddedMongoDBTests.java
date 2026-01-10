@@ -92,7 +92,7 @@ class EmbeddedMongoDBTests {
         assertThat(embeddedMongoDB.isActive()).isFalse();
         assertThat(embeddedMongoDB.getHost()).isEqualTo("localhost");
         assertThat(embeddedMongoDB.getPort()).isEqualTo(29019);
-        assertThat(embeddedMongoDB.getVersion()).isEqualTo(Main.V8_1);
+        assertThat(embeddedMongoDB.getVersion()).isEqualTo(Main.V8_2);
         embeddedMongoDB.stop();
         assertThat(embeddedMongoDB.isActive()).isFalse();
     }
