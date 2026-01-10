@@ -27,7 +27,7 @@ import java.util.Objects;
 public class EmbeddedMongoDB {
     private static final Logger LOG = LoggerFactory.getLogger(EmbeddedMongoDB.class);
     private TransitionWalker.ReachedState<RunningMongodProcess> runningMongodProcess;
-    private Version.Main version = Version.Main.V8_1;
+    private Version.Main version = Version.Main.V8_2;
     private String host = "localhost";
     private int port = 29019;
     private boolean active;
