@@ -1,5 +1,6 @@
 [![Maven Central](https://img.shields.io/maven-central/v/de.svenkubiak/embedded-mongodb)](https://mvnrepository.com/artifact/de.svenkubiak/embedded-mongodb)
 [![Coverage](https://sonar.svenkubiak.de/badges/embedded-mongodb)](https://sonar.svenkubiak.de/badges/embedded-mongodb)
+![SemVer](https://img.shields.io/badge/SemVer-2.0.0-green)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%8D%BA-yellow)](https://buymeacoffee.com/svenkubiak)
 
 embedded-mongodb
@@ -11,7 +12,7 @@ Embedded MongoDB for unit testing and development purposes. Based on [flapdoodle
 
 8.x requires Java 21.
 
-9.x requires Java 21.
+9.x requires Java 25.
 
 Usage
 ------------------
