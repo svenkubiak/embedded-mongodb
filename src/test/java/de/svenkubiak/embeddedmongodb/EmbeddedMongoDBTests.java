@@ -9,10 +9,12 @@ import com.mongodb.client.MongoDatabase;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
 import org.bson.Document;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,10 +28,29 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EmbeddedMongoDBTests {
 
+    private final List<EmbeddedMongoDB> managedInstances = new ArrayList<>();
+
+    @AfterEach
+    void tearDown() {
+        for (int i = managedInstances.size() - 1; i >= 0; i--) {
+            managedInstances.get(i).stop();
+        }
+        managedInstances.clear();
+    }
+
+    private EmbeddedMongoDB manage(EmbeddedMongoDB instance) {
+        managedInstances.add(instance);
+        return instance;
+    }
+
+    private EmbeddedMongoDB createStarted() {
+        return manage(EmbeddedMongoDB.create().start());
+    }
+
     @Test
     void testStart() {
         // given
-        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+        EmbeddedMongoDB embeddedMongoDB = createStarted();
         
         // then
         assertThat(embeddedMongoDB.isActive()).isTrue();
@@ -44,7 +65,7 @@ class EmbeddedMongoDBTests {
     @Test
     void testExistingStart() {
         // given
-        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+        EmbeddedMongoDB embeddedMongoDB = createStarted();
 
         // then
         assertThat(embeddedMongoDB.isActive()).isTrue();
@@ -59,7 +80,7 @@ class EmbeddedMongoDBTests {
     @Test
     void testCreateStart() {
         // given
-        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.createAndStart();
+        EmbeddedMongoDB embeddedMongoDB = manage(EmbeddedMongoDB.createAndStart());
         
         // then
         assertThat(embeddedMongoDB.isActive()).isTrue();
@@ -74,7 +95,7 @@ class EmbeddedMongoDBTests {
     @Test
     void testStop() {
         // given
-        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+        EmbeddedMongoDB embeddedMongoDB = createStarted();
         
         // when
         embeddedMongoDB.stop();
@@ -238,7 +259,7 @@ class EmbeddedMongoDBTests {
 	@Test
 	void testMongoDB() {
 	    // given
-	    EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+	    EmbeddedMongoDB embeddedMongoDB = createStarted();
 
         var codecRegistry = MongoClientSettings.getDefaultCodecRegistry();
         var pojoCodecProvider = PojoCodecProvider.builder()
@@ -251,30 +272,31 @@ class EmbeddedMongoDBTests {
                 .codecRegistry(fromRegistries(codecRegistry, fromProviders(pojoCodecProvider)))
                 .build();
 
-        MongoClient mongoClient = MongoClients.create(settings);
+        try (MongoClient mongoClient = MongoClients.create(settings)) {
+            // then
+            assertThat(mongoClient).isNotNull();
 
-	    // then
-        assertThat(mongoClient).isNotNull();
+            // given
+            MongoDatabase db = mongoClient.getDatabase("embeddedTestDB");
 
-	    // given
-		MongoDatabase db = mongoClient.getDatabase("embeddedTestDB"); 
-		
-		// then
-        assertThat(db).isNotNull();
+            // then
+            assertThat(db).isNotNull();
 
-		// given
-		MongoCollection<Document> collection = db.getCollection("testCollection");
-		
-		// then
-        assertThat(collection).isNotNull();
+            // given
+            MongoCollection<Document> collection = db.getCollection("testCollection");
 
-		// when
-		for (int i=0; i < 100; i++) {
-			collection.insertOne(new Document("i", i));
-		}
-		
-		// then
-        assertThat(collection.countDocuments()).isEqualTo(100);
+            // then
+            assertThat(collection).isNotNull();
+
+            // when
+            for (int i = 0; i < 100; i++) {
+                collection.insertOne(new Document("i", i));
+            }
+
+            // then
+            assertThat(collection.countDocuments()).isEqualTo(100);
+        }
+
         embeddedMongoDB.stop();
         assertThat(embeddedMongoDB.isActive()).isFalse();
 	}
@@ -282,7 +304,7 @@ class EmbeddedMongoDBTests {
 	@Test
     void testInUse() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         // given
-        EmbeddedMongoDB embeddedMongoDB = EmbeddedMongoDB.create().start();
+        EmbeddedMongoDB embeddedMongoDB = createStarted();
 
         // when
         Method privateMethod = embeddedMongoDB.getClass().getDeclaredMethod("inUse", int.class);

@@ -32,12 +32,15 @@ public class EmbeddedMongoDB {
     private int port = 29019;
     private boolean active;
     private boolean ipv6;
+
+    private EmbeddedMongoDB() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stop, "embedded-mongodb-shutdown"));
+    }
     
     /**
-     * Creates a new EmbeddedMongoDB instance with default values
-     * Host: localhost
-     * Port: 29019
-     * 
+     * Creates a new EmbeddedMongoDB instance with default values.
+     * Host: localhost, port: 29019, version: {@link Version.Main#V7_0}.
+     *
      * @return EmbeddedMongoDB instance 
      */
     public static EmbeddedMongoDB create() {
@@ -45,10 +48,9 @@ public class EmbeddedMongoDB {
     }
     
     /**
-     * Creates and starts a new EmbeddedMongoDB instance with default values
-     * Host: localhost
-     * Port: 29019
-     * 
+     * Creates and starts a new EmbeddedMongoDB instance with default values.
+     * Host: localhost, port: 29019, version: {@link Version.Main#V7_0}.
+     *
      * @return EmbeddedMongoDB instance 
      */
     public static EmbeddedMongoDB createAndStart() {
@@ -110,10 +112,10 @@ public class EmbeddedMongoDB {
     }
     
     /**
-     * Sets the version for the EmbeddedMongoDB instance 
+     * Sets the version for the EmbeddedMongoDB instance.
      * <p>
-     * Default is Version.Main.V6_0
-     * 
+     * Default is {@link Version.Main#V7_0}.
+     *
      * @param version The version to set
      * @return EmbeddedMongoDB instance 
      */
@@ -153,7 +155,6 @@ public class EmbeddedMongoDB {
             try {
                 runningMongodProcess = mongod.start(version);
                 active = true;
-                Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 
                 LOG.info("Successfully started EmbeddedMongoDB @ {}:{}", host, port);
             } catch (Exception e) {
