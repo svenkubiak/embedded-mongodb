@@ -8,7 +8,7 @@ embedded-mongodb
 
 A small Java wrapper around [flapdoodle-oss/de.flapdoodle.embed.mongo][1] that makes it easy to run an embedded MongoDB instance for unit tests and local development. The library downloads the matching `mongod` binary for your platform, starts it as a child process, and shuts it down again when you call `stop()` or when the JVM exits.
 
-This project is intended for **testing only**. The embedded server runs without authentication and should not be exposed to untrusted networks.
+This project is intended for **testing or development** only. The embedded server runs without authentication and should not be exposed to untrusted networks.
 
 Requirements
 ------------
